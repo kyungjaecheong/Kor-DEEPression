@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Kor-DEEPression</title>
+    <meta name="description" content="AI 딥러닝 기반 한국형 우울증 예측 프로젝트">
+    <meta name="keywords" content="AI, Deep Learning, Depression">
+    <meta name="author" content="KyungJae Cheong">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Kor-DEEPression">
+    <meta property="og:description" content="AI 딥러닝 기반 한국형 우울증 예측 프로젝트">
+    <meta property="og:image" content="{{ url_for('static', filename='imgs/og-image.png') }}">
+    <!-- Icons -->
+    <link rel="shortcut icon" href="../static/icons/favicon-kr-deep.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="../static/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../static/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../static/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../static/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../static/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../static/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../static/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../static/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../static/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../static/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/icons/favicon-16x16.png">
+    <link rel="manifest" href="../static/icons/manifest.json">
+    <meta name="msapplication-TileColor" content="#6f42c1">
+    <meta name="msapplication-TileImage" content="../static/icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#6f42c1">
+    <meta name="msapplication-config" content="../static/icons/browserconfig.xml">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Custom styles CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900">
+    <link rel="stylesheet" href="../static/css/custom_styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img src="../static/imgs/brain-heart-32.png" alt="Kor-DEEPression">
+                    K - DEEPression
+                </a>
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarResponsive">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/prediction">
+                                Prediction
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#dashboard">
+                                Trend
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/info">
+                                Information
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Links
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/kyungjaecheong/Kor-DEEPression">
+                                    <img src="https://github.githubassets.com/favicons/favicon.svg" style="width: 16px; height: 16px;">
+                                    (Repo) Korean-DEEPression
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/kyungjaecheong">
+                                    <img src="https://github.githubassets.com/favicons/favicon.svg" style="width: 16px; height: 16px;">
+                                    (Github) Kyung-Jae Cheong
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-12">                    
+                    <h1 id="top-title">Prediction</h1>
+                    <br>
+                    <p class="lead">다음 설문에 대한 정보를 통해<br>우울증 예측을 실시합니다</p>
+                </div>
+            </div>
+        </div>
+        <div class="bs-docs-section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <br><img src="../static/imgs/head-heart-144.png"><br><br>
+                    <!-- {% if pred and prob %}
+                    <h1>예측 결과</h1>
+                    <h2>{{pred}}</h2>
+                    <h2>{{prob}}</h2>
+                    {% endif %} -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="bs-component">
+                        <h1 id="forms">Request Form</h1>
+                        <form action="/prediction" method="post">
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q1. Gender<br>성별은 무엇입니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gender" id="options-gender0" value="0" checked>
+                                    <label class="form-check-label" for="options-gender0">
+                                        남성 (Male)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gender" id="options-gender1" value="1">
+                                    <label class="form-check-label" for="options-gender1">
+                                        여성 (Female)
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q2. Age<br>만 나이는 어디에 해당합니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="age" id="options-age20" value="20" checked>
+                                    <label class="form-check-label" for="options-age20">
+                                        만 29 세 이하
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="age" id="options-age30" value="30">
+                                    <label class="form-check-label" for="options-age30">
+                                        만 30 ~ 39 세
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="age" id="options-age40" value="40">
+                                    <label class="form-check-label" for="options-age40">
+                                        만 40 ~ 49 세
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="age" id="options-age50" value="50">
+                                    <label class="form-check-label" for="options-age50">
+                                        만 50 ~ 59 세
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="age" id="options-age60" value="60">
+                                    <label class="form-check-label" for="options-age60">
+                                        만 60 ~ 69 세
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="age" id="options-age70" value="70">
+                                    <label class="form-check-label" for="options-age70">
+                                        만 70 ~ 79 세
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="age" id="options-age80" value="80">
+                                    <label class="form-check-label" for="options-age80">
+                                        만 80 세 이상
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q3. Education<br>학교를 어디까지 다니셨습니까?<br>(졸업 기준)</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="edu" id="options-edu0" value="0" checked>
+                                    <label class="form-check-label" for="options-edu0">
+                                        초졸 이하
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="edu" id="options-edu1" value="1">
+                                    <label class="form-check-label" for="options-edu1">
+                                        중졸
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="edu" id="options-edu2" value="2">
+                                    <label class="form-check-label" for="options-edu2">
+                                        고졸
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="edu" id="options-edu3" value="3">
+                                    <label class="form-check-label" for="options-edu3">
+                                        대졸 이상
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q4. Household<br>귀하의 세대에 동거하고 있는 사람은 몇 명입니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cfam" id="options-cfam1" value="1" checked>
+                                    <label class="form-check-label" for="options-cfam1">
+                                        1 명
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cfam" id="options-cfam2" value="2">
+                                    <label class="form-check-label" for="options-cfam2">
+                                        2 명
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cfam" id="options-cfam3" value="3">
+                                    <label class="form-check-label" for="options-cfam3">
+                                        3 명
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cfam" id="options-cfam4" value="4">
+                                    <label class="form-check-label" for="options-cfam4">
+                                        4 명
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cfam" id="options-cfam5" value="5">
+                                    <label class="form-check-label" for="options-cfam5">
+                                        5 명 이상
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q5. Merital status<br>현재 결혼을 하신 상태입니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="marital" id="options-marital0" value="0" checked>
+                                    <label class="form-check-label" for="options-marital0">
+                                        아니오 (미혼, 사별, 이혼)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="marital" id="options-marital1" value="1">
+                                    <label class="form-check-label" for="options-marital1">
+                                        예 (기혼)
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q6-1. Subjective Health<br>평소에 귀하의 건강은 어떻다고 생각하십니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="health" id="options-health5" value="5">
+                                    <label class="form-check-label" for="options-health5">
+                                        매우 좋음
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="health" id="options-health4" value="4">
+                                    <label class="form-check-label" for="options-health4">
+                                        좋음
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="health" id="options-health3" value="3" checked>
+                                    <label class="form-check-label" for="options-health3">
+                                        보통
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="health" id="options-health2" value="2">
+                                    <label class="form-check-label" for="options-health2">
+                                        나쁨
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="health" id="options-health1" value="1">
+                                    <label class="form-check-label" for="options-health1">
+                                        매우 나쁨
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q6-2. Modality status<br>최근 2주간 만성질환, 급성질환, 사고, 중독 등으로 몸이 아프거나 불편을 느꼈던 적이 있습니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="modality" id="options-modality0" value="0" checked>
+                                    <label class="form-check-label" for="options-modality0">
+                                        아니오
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="modality" id="options-modality1" value="1">
+                                    <label class="form-check-label" for="options-modality1">
+                                        예
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q7. Employment status<br>최근 일주일 동안 수입을 목적으로 1시간 이상 일을 하신 적이 있습니까?<br>(일시 휴직 상태도 취업자에 해당함)</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="economy" id="options-economy0" value="0" checked>
+                                    <label class="form-check-label" for="options-economy0">
+                                        아니오 (실업자, 비경제 활동인구)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="economy" id="options-economy1" value="1">
+                                    <label class="form-check-label" for="options-economy1">
+                                        예 (취업자, 휴직자)
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q8-1. Weight change<br>최근 1년 전과 비교해 몸무게에 변화가 있었습니까?<br>(변화 몸무게는 3kg이상을 기준으로 함)</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="w_change" id="options-w_change1" value="1" checked>
+                                    <label class="form-check-label" for="options-w_change1">
+                                        변화가 없었다 (0kg이상 3kg미만 증가 및 감소)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="w_change" id="options-w_change2" value="2">
+                                    <label class="form-check-label" for="options-w_change2">
+                                        몸무게가 3kg이상 늘었다
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="w_change" id="options-w_change3" value="3">
+                                    <label class="form-check-label" for="options-w_change3">
+                                        몸무게가 3kg이상 줄었다
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q8-2. Weight control <br>최근 1년 동안 본인의 의지로 몸무게를 조절하려고 노력한 적이 있습니까?<br>(몸무게 조절 : 유지하기, 줄이기, 늘이기)</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="w_control" id="options-w_control1" value="1" checked>
+                                    <label class="form-check-label" for="options-w_control1">
+                                        몸무게를 조절하기 위해 노력하였다
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="w_control" id="options-w_control4" value="4">
+                                    <label class="form-check-label" for="options-w_control4">
+                                        몸무게 조절을 위한 노력을 한 적이 없다
+                                    </label>
+                                </div>                                
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q9-1. Drinking <br>최근 1년 동안 한달에 1회 이상 술을 마신 적이 있습니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="drink" id="options-drink0-1" value="0" checked>
+                                    <label class="form-check-label" for="options-drink0-1">
+                                        평생 술을 마셔본 적이 없음
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="drink" id="options-drink0-2" value="0">
+                                    <label class="form-check-label" for="options-drink0-2">
+                                        최근 1년간 전혀 마시지 않았다
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="drink" id="options-drink1" value="0">
+                                    <label class="form-check-label" for="options-drink1">
+                                        한달에 1번 미만으로 마셨음
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="drink" id="options-drink2" value="1">
+                                    <label class="form-check-label" for="options-drink2">
+                                        한달에 1번 이상 술을 마셔오고 있음
+                                    </label>
+                                </div>                                
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q9-2. Drinking Once <br>대략적으로 한번에 술을 얼마나 마십니까?<br>(소주,양주 구분없이 술잔으로 계산)<br>(355cc 캔맥주 1개는 1.6잔으로 계산)</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="drink_once" id="options-drink_once0" value="0" checked>
+                                    <label class="form-check-label" for="options-drink_once0">
+                                        해당 없음 (1년간 술을 안마신 경우 다음 문항으로)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="drink_once" id="options-drink_once1-2" value="1">
+                                    <label class="form-check-label" for="options-drink_once1-2">
+                                        4잔 이하
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="drink_once" id="options-drink_once3" value="3">
+                                    <label class="form-check-label" for="options-drink_once3">
+                                        5-6잔
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="drink_once" id="options-drink_once4" value="4">
+                                    <label class="form-check-label" for="options-drink_once4">
+                                        7잔 이상
+                                    </label>
+                                </div>                                
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q10. Stress Cognition <br>평소 일상생활 중에 스트레스를 어느 정도 느끼고 있습니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="stress" id="options-stress0" value="0" checked>
+                                    <label class="form-check-label" for="options-stress0">
+                                        거의 느끼지 않는다
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="stress" id="options-stress1" value="1">
+                                    <label class="form-check-label" for="options-stress1">
+                                        조금 느끼는 편이다
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="stress" id="options-stress2" value="2">
+                                    <label class="form-check-label" for="options-stress2">
+                                        많이 느끼는 편이다
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="stress" id="options-stress3" value="3">
+                                    <label class="form-check-label" for="options-stress3">
+                                        대단히 많이 느낀다
+                                    </label>
+                                </div>                                
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="mt-4">Q11. Smoke<br>현재 일반담배 혹은 전자담배를 피우십니까?</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="smoke" id="options-smoke0" value="0" checked>
+                                    <label class="form-check-label" for="options-smoke0">
+                                        아니오 (금연에 성공한 과거흡연자 포함)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="smoke" id="options-smoke1" value="1">
+                                    <label class="form-check-label" for="options-smoke1">
+                                        예 (현재 흡연자)
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <br><br>
+                            <div class="d-grid gap-2">
+                                <button class="source-button btn btn-primary btn-lg" type="submit">
+                                    <img src="../static/imgs/head-heart-32.png">
+                                    Predict !
+                                </button>
+                            </div>                            
+                            <br><br><br><br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
