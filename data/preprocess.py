@@ -60,11 +60,31 @@ def concat_df(df_list):
     df = pd.concat(df_list, ignore_index=True)
     return df
 
-df14 = data_load('./data/downloads/HN14_ALL.csv')
-df16 = data_load('./data/downloads/HN16_ALL.csv')
-df18 = data_load('./data/downloads/HN18_ALL.csv')
-df20 = data_load('./data/downloads/HN20_ALL.csv')
-df_list = [df14, df16, df18, df20]
-df = concat_df(df_list)
-df_drop = drop_nan_df(df)
-print(df_drop.shape)
+# df14 = data_load('./data/downloads/HN14_ALL.csv')
+# df16 = data_load('./data/downloads/HN16_ALL.csv')
+# df18 = data_load('./data/downloads/HN18_ALL.csv')
+# df20 = data_load('./data/downloads/HN20_ALL.csv')
+# df_list = [df14, df16, df18, df20]
+# df = concat_df(df_list)
+# df_drop = drop_nan_df(df)
+# print(df_drop.shape)
+
+def get_targets(df):
+    depression = []
+    MDD = []
+    df_targets = df[col_dpr]    # ['DF2_pr', 'mh_PHQ_S', 'BP5']
+    for i in range(len(df_targets)):
+        if df_targets.loc[i, 'DF2_pr'] == 1\
+        or df_targets.loc[i, 'BP5'] == 1\
+        or df_targets.loc[i, 'mh_PHQ_S'] > 4:
+            depression.append(1)
+            if df_targets.loc[i, 'mh_PHQ_S'] > 9:
+                MDD.append(1)
+            else:
+                MDD.append(0)
+        else:
+            depression.append(0)
+            MDD.append(0)
+    df['Depression'] = depression
+    df['MDD'] = MDD
+    return df
