@@ -1,0 +1,252 @@
+{
+    "sex": 
+    [
+        {
+            "sex" : 1,
+            "name" : "Male"
+        },
+        {
+            "sex" : 2,
+            "name" : "Female"
+        }
+    ],
+    "education":
+    [
+        {
+            "education" : 1,
+            "name" : "서당/한학"
+        },
+        {
+            "education" : 2,
+            "name" : "무학"
+        },
+        {
+            "education" : 3,
+            "name" : "초등학교"
+        },
+        {
+            "education" : 4,
+            "name" : "중학교"
+        },
+        {
+            "education" : 5,
+            "name" : "고등학교"
+        },
+        {
+            "education" : 6,
+            "name" : "2년/3년제 대학"
+        },
+        {
+            "education" : 7,
+            "name" : "4년제 대학"
+        },
+        {
+            "education" : 8,
+            "name" : "대학원"
+        }
+    ],
+    "generation":
+    [
+        {
+            "generation" : 1,
+            "name" : "1인 가구"
+        },
+        {
+            "generation" : 2,
+            "name" : "1세대 - 부부"
+        },
+        {
+            "generation" : 3,
+            "name" : "1세대 - 기타"
+        },
+        {
+            "generation" : 4,
+            "name" : "2세대 - 부부+미혼자녀"
+        },
+        {
+            "generation" : 5,
+            "name" : "2세대 - 편부모+미혼자녀"
+        },
+        {
+            "generation" : 6,
+            "name" : "2세대 - 기타"
+        },
+        {
+            "generation" : 7,
+            "name" : "3세대 이상"
+        }
+    ],
+    "marital":
+    [
+        {
+            "marital" : 1,
+            "name" : "기혼(유배우자)"
+        },
+        {
+            "marital" : 2,
+            "name" : "사별/이혼"
+        },
+        {
+            "marital" : 3,
+            "name" : "미혼"
+        }
+    ],
+    "economy":
+    [
+        {
+            "economy" : 1,
+            "name" : "취업자"
+        },
+        {
+            "economy" : 2,
+            "name" : "실업자/비경제활동인구"
+        }
+    ],
+    "subj_health":
+    [
+        {
+            "subj_health" : 1,
+            "name" : "매우 좋음"
+        },
+        {
+            "subj_health" : 2,
+            "name" : "좋음"
+        },
+        {
+            "subj_health" : 3,
+            "name" : "보통"
+        },
+        {
+            "subj_health" : 4,
+            "name" : "나쁨"
+        },
+        {
+            "subj_health" : 5,
+            "name" : "매우 나쁨"
+        }
+    ],
+    "limitation":
+    [
+        {
+            "limitation" : 1,
+            "name" : "활동제한 O"
+        },
+        {
+            "limitation" : 2,
+            "name" : "활동제한 X"
+        }
+    ],
+    "modality":
+    [
+        {
+            "modality" : 1,
+            "name" : "2주간 이환 O"
+        },
+        {
+            "modality" : 2,
+            "name" : "2주간 이환 X"
+        }
+    ],
+    "w_change":
+    [
+        {
+            "w_change" : 1,
+            "name" : "체중 변화 없음"
+        },
+        {
+            "w_change" : 2,
+            "name" : "체중 감소/증가"
+        }
+    ],
+    "w_control":
+    [
+        {
+            "w_control" : 1,
+            "name" : "체중 유지/감소/증가 노력 O"
+        },
+        {
+            "w_control" : 2,
+            "name" : "체중 조절 노력해본 적 없음"
+        }
+    ],
+    "drk_freq":
+    [
+        {
+            "drk_freq" : 1,
+            "name" : "안마심/월1회 미만"
+        },
+        {
+            "drk_freq" : 3,
+            "name" : "월 1회 정도"
+        },
+        {
+            "drk_freq" : 4,
+            "name" : "월 2-4회 정도"
+        },
+        {
+            "drk_freq" : 5,
+            "name" : "주 2-3회 정도"
+        },
+        {
+            "drk_freq" : 6,
+            "name" : "주 4회 이상"
+        }
+    ],
+    "drk_amount" :
+    [
+        {
+            "drk_amount" : 0,
+            "name" : "전혀 안마심"
+        },
+        {
+            "drk_amount" : 1,
+            "name" : "1-2잔"
+        },
+        {
+            "drk_amount" : 2,
+            "name" : "3-4잔"
+        },
+        {
+            "drk_amount" : 3,
+            "name" : "5-6잔"
+        },
+        {
+            "drk_amount" : 4,
+            "name" : "7-9잔"
+        },
+        {
+            "drk_amount" : 5,
+            "name" : "10잔 이상"
+        }
+    ],
+    "smoke" :
+    [
+        {
+            "smoke" : 0,
+            "name" : "비흡연/과거흡연"
+        },
+        {
+            "smoke" : 1,
+            "name" : "현재흡연"
+        }
+    ],
+    "stress":
+    [
+        {
+            "stress" : 1,
+            "name" : "대단히 많이 느낌"
+        },
+        {
+            "stress" : 2,
+            "name" : "많이 느끼는 편임"
+        },
+        {
+            "stress" : 3,
+            "name" : "적게 느끼는 편임"
+        },
+        {
+            "stress" : 4,
+            "name" : "거의 느끼지 않음"
+        }
+    ]
+}
