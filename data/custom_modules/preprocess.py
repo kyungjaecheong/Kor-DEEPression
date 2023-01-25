@@ -1,21 +1,23 @@
 import pandas as pd
 import numpy as np
 
-col_demo = ['year', 'age', 'HE_BMI', 'sex', 'educ', 'genertn', 'marri_2', 'EC1_1']
+col_demo = ['year', 'age', 'HE_ht', 'HE_wt', 'HE_BMI', 'sex', 'edu', 'genertn', 'marri_2', 'EC1_1']
 col_health = ['D_1_1', 'LQ4_00', 'D_2_1', 'BO1_1', 'BO2_1']
 col_life = ['BD1_11', 'BD2_1', 'sm_presnt', 'BP1']
+col_disease = ['HE_HP', 'HE_DM', 'HE_HCHOL', 'HE_HTG']
+col_disease_20 = ['HE_HP', 'HE_DM_HbA1c', 'HE_HCHOL', 'HE_HTG']
 col_dpr = ['DF2_pr', 'mh_PHQ_S']
 
 def data_load(filedir):
     df0 = pd.read_csv(filedir, low_memory=False)
-    # print(df0.shape)
-    if 'ID' in df0.columns:
-        col_list = ['ID']+col_demo+col_health+col_life+col_dpr
-        df1 = df0[col_list].rename(columns={'ID':'id'})
-    else:
-        col_list = ['id']+col_demo+col_health+col_life+col_dpr
-        df1 = df0[col_list]
-    # print(df1.shape)
+    col_list = ['id']+col_demo+col_health+col_disease+col_life+col_dpr
+    df1 = df0[col_list]
+    return df1
+
+def data_load_20(filedir):
+    df0 = pd.read_csv(filedir, low_memory=False)
+    col_list = ['ID']+col_demo+col_health+col_disease_20+col_life+col_dpr
+    df1 = df0[col_list].rename(columns={'ID':'id','HE_DM_HbA1c':'HE_DM'})
     return df1
 
 # df14 = data_load('./data/downloads/HN14_ALL.csv')
@@ -70,10 +72,9 @@ def concat_df(df_list):
 # print(df_drop.shape)
 
 def query_df(df):
-    df1 = df.query('educ!=99 and genertn!=9 and marri_2!=99 and marri_2!=8 and marri_2!=9 and EC1_1!=9')
-    df2 = df1.query('D_1_1!=9 and LQ4_00!=9 and D_2_1!=9 and BO1_1!=9 and BO2_1!=9')
-    df3 = df2.query('BD1_11!=9 and BD2_1!=9 and BP1!=9')
-    return df3
+    df1 = df.query('marri_2!=99 and marri_2!=8 and marri_2!=9')
+    df2 = df1.query('D_1_1!=9 and BO1_1!=9 and BD1_11!=9 and BD2_1!=9 and BP1!=9')
+    return df2
 
 def get_targets(df):
     depression = []
