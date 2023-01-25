@@ -59,6 +59,19 @@ def main():
         
     print("MDD.csv file created successfully")    
     
+    # JOIN QUERY 3
+    sql_query_join_3 = """
+    SELECT f.*, t.depression, t.mdd
+    FROM features f
+    JOIN targets t
+    ON f.id = t.id
+    """
+    
+    # to csv 3
+    sql_csv_3 = f"""COPY ({sql_query_join_3}) TO STDOUT WITH CSV DELIMITER ',';"""
+    with open("./data/downloads/MDD_Dep.csv", "w") as cf:
+        cur.copy_expert(sql_csv_3, cf)
+    
     conn.close()
     
     print('Successfully Disconnected to DB')
