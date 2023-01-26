@@ -14,65 +14,37 @@
     [
         {
             "education" : 1,
-            "name" : "서당/한학"
+            "name" : "초졸 이하"
         },
         {
             "education" : 2,
-            "name" : "무학"
+            "name" : "중졸"
         },
         {
             "education" : 3,
-            "name" : "초등학교"
+            "name" : "고졸"
         },
         {
             "education" : 4,
-            "name" : "중학교"
-        },
-        {
-            "education" : 5,
-            "name" : "고등학교"
-        },
-        {
-            "education" : 6,
-            "name" : "2년/3년제 대학"
-        },
-        {
-            "education" : 7,
-            "name" : "4년제 대학"
-        },
-        {
-            "education" : 8,
-            "name" : "대학원"
+            "name" : "대졸 이상"
         }
     ],
-    "generation":
+    "household":
     [
         {
-            "generation" : 1,
+            "household" : 0,
             "name" : "1인 가구"
         },
         {
-            "generation" : 2,
-            "name" : "1세대 - 부부"
+            "household" : 1,
+            "name" : "1세대"
         },
         {
-            "generation" : 3,
-            "name" : "1세대 - 기타"
+            "household" : 2,
+            "name" : "2세대"
         },
         {
-            "generation" : 4,
-            "name" : "2세대 - 부부+미혼자녀"
-        },
-        {
-            "generation" : 5,
-            "name" : "2세대 - 편부모+미혼자녀"
-        },
-        {
-            "generation" : 6,
-            "name" : "2세대 - 기타"
-        },
-        {
-            "generation" : 7,
+            "household" : 3,
             "name" : "3세대 이상"
         }
     ],
@@ -106,89 +78,37 @@
     [
         {
             "subj_health" : 1,
-            "name" : "매우 좋음"
-        },
-        {
-            "subj_health" : 2,
             "name" : "좋음"
         },
         {
-            "subj_health" : 3,
+            "subj_health" : 2,
             "name" : "보통"
         },
         {
-            "subj_health" : 4,
+            "subj_health" : 3,
             "name" : "나쁨"
-        },
-        {
-            "subj_health" : 5,
-            "name" : "매우 나쁨"
-        }
-    ],
-    "limitation":
-    [
-        {
-            "limitation" : 1,
-            "name" : "활동제한 O"
-        },
-        {
-            "limitation" : 2,
-            "name" : "활동제한 X"
-        }
-    ],
-    "modality":
-    [
-        {
-            "modality" : 1,
-            "name" : "2주간 이환 O"
-        },
-        {
-            "modality" : 2,
-            "name" : "2주간 이환 X"
-        }
-    ],
-    "w_change":
-    [
-        {
-            "w_change" : 1,
-            "name" : "체중 변화 없음"
-        },
-        {
-            "w_change" : 2,
-            "name" : "체중 감소/증가"
-        }
-    ],
-    "w_control":
-    [
-        {
-            "w_control" : 1,
-            "name" : "체중 유지/감소/증가 노력 O"
-        },
-        {
-            "w_control" : 2,
-            "name" : "체중 조절 노력해본 적 없음"
         }
     ],
     "drk_freq":
     [
         {
-            "drk_freq" : 1,
+            "drk_freq" : 0,
             "name" : "안마심/월1회 미만"
         },
         {
-            "drk_freq" : 3,
+            "drk_freq" : 1,
             "name" : "월 1회 정도"
         },
         {
-            "drk_freq" : 4,
+            "drk_freq" : 2,
             "name" : "월 2-4회 정도"
         },
         {
-            "drk_freq" : 5,
+            "drk_freq" : 3,
             "name" : "주 2-3회 정도"
         },
         {
-            "drk_freq" : 6,
+            "drk_freq" : 4,
             "name" : "주 4회 이상"
         }
     ],
