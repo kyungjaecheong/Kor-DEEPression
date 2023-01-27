@@ -72,7 +72,7 @@ def concat_df(df_list):
 # print(df_drop.shape)
 
 def query_df(df):
-    df1 = df.query('HE_BMI<45 and marri_2!=99 and marri_2!=8 and marri_2!=9')
+    df1 = df.query('HE_BMI<40 and marri_2!=99 and marri_2!=8 and marri_2!=9')
     df2 = df1.query('D_1_1!=9 and BO1_1!=9 and BD1_11!=9 and BD2_1!=9 and BP1!=9')
     return df2
 
@@ -98,11 +98,11 @@ def get_targets(df):
 def get_features(df):
     household = []
     marital = []
-    health = []
+    # health = []
     limit = []
     modality = []
     w_change = []
-    w_control = []
+    # w_control = []
     HE_HBP = []
     HE_DB = []
     drink_freq = []
@@ -125,12 +125,12 @@ def get_features(df):
         elif df.loc[i, 'marri_2'] == 88:
             marital.append(3)
         
-        if df.loc[i, 'D_1_1'] in [1,2]:
-            health.append(1)
-        elif df.loc[i, 'D_1_1'] == 3:
-            health.append(2)
-        elif df.loc[i, 'D_1_1'] in [4,5]:
-            health.append(3)
+        # if df.loc[i, 'D_1_1'] in [1,2]:
+        #     health.append(1)
+        # elif df.loc[i, 'D_1_1'] == 3:
+        #     health.append(2)
+        # elif df.loc[i, 'D_1_1'] in [4,5]:
+        #     health.append(3)
         
         if df.loc[i, 'LQ4_00'] == 2:
             limit.append(0)
@@ -144,13 +144,17 @@ def get_features(df):
         
         if df.loc[i, 'BO1_1'] == 1:
             w_change.append(0)
-        elif df.loc[i, 'BO1_1'] in [2,3]:
+        elif df.loc[i, 'BO1_1'] in [2,3]\
+        and df.loc[i, 'BO2_1'] in [1,2,3]:
+            w_change.append(0)
+        elif df.loc[i, 'BO1_1'] in [2,3]\
+        and df.loc[i, 'BO2_1'] == 4:
             w_change.append(1)
         
-        if df.loc[i, 'BO2_1'] in [1,2,3]:
-            w_control.append(1)
-        elif df.loc[i, 'BO2_1'] == 4:
-            w_control.append(0)
+        # if df.loc[i, 'BO2_1'] in [1,2,3]:
+        #     w_control.append(1)
+        # elif df.loc[i, 'BO2_1'] == 4:
+        #     w_control.append(0)
         
         if df.loc[i, 'HE_HP'] == 3:
             HE_HBP.append(1)
@@ -174,11 +178,11 @@ def get_features(df):
     
     df['household'] = household
     df['marital'] = marital
-    df['health'] = health
+    # df['health'] = health
     df['limit'] = limit
     df['modality'] = modality
     df['w_change'] = w_change
-    df['w_control'] = w_control
+    # df['w_control'] = w_control
     df['HE_HBP'] = HE_HBP
     df['HE_DB'] = HE_DB
     df['dr_freq'] = drink_freq
