@@ -110,8 +110,6 @@ def main():
     sql_create_table_feat = """CREATE TABLE IF NOT EXISTS features (
         id VARCHAR NOT NULL,
         age INTEGER,
-        height FLOAT,
-        weight FLOAT,
         bmi FLOAT,
         sex INTEGER,
         education INTEGER,
@@ -124,8 +122,7 @@ def main():
         w_change INTEGER,
         high_bp INTEGER,
         diabetes INTEGER,
-        high_chol INTEGER,
-        high_tg INTEGER,
+        dyslipidemia INTEGER,
         drk_freq INTEGER,
         drk_amount INTEGER,
         smoke INTEGER,
@@ -159,7 +156,7 @@ def main():
     cur.execute(sql_create_table_feat)
     print('table created complete')
     
-    with open('./data/downloads/ver3/HN_year.csv', 'r') as cf:
+    with open('./data/downloads/ver4/HN_year.csv', 'r') as cf:
         csv_reader = csv.reader(cf)
         next(csv_reader)
         cur.copy_from(cf, 'id_year', sep=',')    
@@ -187,12 +184,12 @@ def main():
     cur.executemany("""INSERT INTO smoke (smoke, name) VALUES (%s, %s);""", list_smoke)
     cur.executemany("""INSERT INTO stress (stress, name) VALUES (%s, %s);""", list_stress)
         
-    with open('./data/downloads/ver3/HN_feature.csv', 'r') as cf:
+    with open('./data/downloads/ver4/HN_feature.csv', 'r') as cf:
         csv_reader = csv.reader(cf)
         next(csv_reader)
         cur.copy_from(cf, 'features', sep=',')
         
-    with open('./data/downloads/ver3/HN_target.csv', 'r') as cf:
+    with open('./data/downloads/ver4/HN_target.csv', 'r') as cf:
         csv_reader = csv.reader(cf)
         next(csv_reader)
         cur.copy_from(cf, 'targets', sep=',')
