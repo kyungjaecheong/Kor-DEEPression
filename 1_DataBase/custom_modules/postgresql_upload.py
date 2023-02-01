@@ -9,7 +9,7 @@ Contributor : Kyung Jae, Cheong (정경재)
 '''
 
 # 함수 리스트 및 __all__ 정의(import * 할 때 불러올 함수들을 정의)
-# from custom_modules.preprocess import *
+# from custom_modules.postgresql_upload import *
 __all__ = ['table_initialization',
            'table_creation',
            'insertion_csv',
