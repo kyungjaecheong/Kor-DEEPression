@@ -3,7 +3,7 @@ CLI 실행 명령어
 $ python 1_DataBase/1-2_PostgreSQL-RDB.py
 '''
 
-# 라이브러리 및 함수 Impoert
+# 라이브러리 및 함수 Import
 import os
 import sys
 import psycopg2
