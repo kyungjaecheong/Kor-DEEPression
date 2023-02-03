@@ -41,10 +41,17 @@ def main():
         sys.exit()
 
     # Query & Get csv(temp) : SQL Qurey문을 통해 csv 데이터를 생성하는 기능
-    get_csv_file(cur, mode='EDA', savepath='./2_Modeling/downloads/temp_data/EDA_temp.csv')
-    get_csv_file(cur, mode='Depression', savepath='./2_Modeling/downloads/temp_data/Depression_temp.csv')
-    get_csv_file(cur, mode='MDD', savepath='./2_Modeling/downloads/temp_data/MDD_temp.csv')
-    # get_csv_file(cur, mode='error', savepath='./2_Modeling/downloads/temp_data/error_temp.csv')
+    # EDA모드에서는 범주형 변수의 테이블을 모두 JOIN하여 모두 문자열로 불러옴
+    get_csv_file(cur, mode='EDA', target='depression', savepath="./2_Modeling/downloads/temp_data/EDA_depr_temp.csv")
+    get_csv_file(cur, mode='EDA', target='MDD', savepath="./2_Modeling/downloads/temp_data/EDA_mdd_temp.csv")
+    # Model모드에서는 모두 수치형으로 데이터를 불러옴
+    get_csv_file(cur, mode='Model', target='depression', savepath="./2_Modeling/downloads/temp_data/Model_depr_temp.csv")
+    get_csv_file(cur, mode='Model', target='MDD', savepath="./2_Modeling/downloads/temp_data/Model_mdd_temp.csv")
+    # #error checking
+    # get_csv_file(cur, mode='error', target='depression', savepath="./2_Modeling/downloads/error.csv")
+    # get_csv_file(cur, mode='error', target='MDD', savepath="./2_Modeling/downloads/error.csv")
+    # get_csv_file(cur, mode='EDA', target='error', savepath="./2_Modeling/downloads/error.csv")
+    # get_csv_file(cur, mode='Model', target='error', savepath="./2_Modeling/downloads/error.csv")
     
     # postgreSQL 연결 종료
     conn.close()    
@@ -52,17 +59,27 @@ def main():
     
     
     # Data loading : column 이름을 추가하기 위해 저장한 임시 데이터를 다시 불러옴
-    df_eda = load_df_with_columns('./2_Modeling/downloads/temp_data/EDA_temp.csv', mode='EDA')
-    df_depr = load_df_with_columns('./2_Modeling/downloads/temp_data/Depression_temp.csv', mode='Depression')
-    df_mdd = load_df_with_columns('./2_Modeling/downloads/temp_data/MDD_temp.csv', mode='MDD')
-    # df_error = load_df_with_columns('./2_Modeling/downloads/temp_data/error_temp.csv', mode='error')
+    df_eda_depr = load_df_with_columns(mode='EDA', target='depression', filepath="./2_Modeling/downloads/temp_data/EDA_depr_temp.csv")
+    df_eda_mdd = load_df_with_columns(mode='EDA', target='MDD', filepath="./2_Modeling/downloads/temp_data/EDA_mdd_temp.csv")
+    df_depr = load_df_with_columns(mode='Model', target='depression', filepath="./2_Modeling/downloads/temp_data/Model_depr_temp.csv")
+    df_mdd = load_df_with_columns(mode='Model', target='MDD', filepath="./2_Modeling/downloads/temp_data/Model_mdd_temp.csv")
+    # #error checking
+    # df_error = load_df_with_columns(mode='error', target='depression', filepath="./2_Modeling/downloads/temp_data/Model_mdd_temp.csv")
+    # df_error = load_df_with_columns(mode='error', target='MDD', filepath="./2_Modeling/downloads/temp_data/Model_mdd_temp.csv")
+    # df_error = load_df_with_columns(mode='EDA', target='error', filepath="./2_Modeling/downloads/temp_data/Model_mdd_temp.csv")
+    # df_error = load_df_with_columns(mode='Model', target='error', filepath="./2_Modeling/downloads/temp_data/Model_mdd_temp.csv")
     print('Data loading : Success\n')
     
     # Data to csv(final) : column 이름을 추가한 최종 데이터들을 Export함
-    df_to_csv(df_eda, mode='EDA', savepath='./2_Modeling/downloads/EDA.csv')
-    df_to_csv(df_depr, mode='Depression', savepath='./2_Modeling/downloads/Depression.csv')
-    df_to_csv(df_mdd, mode='MDD', savepath='./2_Modeling/downloads/MDD.csv')
+    # EDA 모드에서는 이진변수를 문자열(Yes,No)로 수정
+    df_to_csv(df_eda_depr, mode='EDA', savepath='./2_Modeling/downloads/EDA_depr.csv')
+    df_to_csv(df_eda_mdd, mode='EDA', savepath='./2_Modeling/downloads/EDA_mdd.csv')
+    # Model 모드에서는 'id' column을 제외
+    df_to_csv(df_depr, mode='Model', savepath='./2_Modeling/downloads/Model_depr.csv')
+    df_to_csv(df_mdd, mode='Model', savepath='./2_Modeling/downloads/Model_mdd.csv')
+    # #error checking
     # df_to_csv(df_mdd, mode='error', savepath='./2_Modeling/downloads/error.csv')
+    print('Data to csv file : Success\n')
 
 # 파일이 실행되면 자동으로 main 함수를 동작하도록 함  
 if __name__ == '__main__':
