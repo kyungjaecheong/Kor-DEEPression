@@ -13,14 +13,36 @@ html {
 
 body {
     padding-top: 120px;
-    padding-bottom: 120px;
     text-align: center;
 }
 
 /* Extra markup and styles */
 
-.nav-item .dropdown-item {
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+.navbar-brand {
+    font-size: 20px;
+}
+
+.nav-item {
+    font-size: 20px;
+}
+
+.nav-item .dropdown-menu {
     text-align: center;
+    font-size: 16px;
+    background-color: #CBBBE8;
+}
+
+.container {
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 
 .bs-docs-section .bs-component {
@@ -33,4 +55,16 @@ body {
     padding-left: 16px;
     padding-bottom: 8px;
     background-color: #343a40;
+}
+
+footer {
+    margin: 5rem;
+    text-align: center;
+    display: block;
+    font-size: 16px;
+}
+
+#footer p {
+    margin-bottom: 16px;
+    clear: left;
 }
