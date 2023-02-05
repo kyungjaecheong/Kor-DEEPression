@@ -271,6 +271,7 @@ def model_builder_cnn(hp):
 
 
 # Callback 함수 정의(EarlyStopping, ModelCheckpoint)
+# 하이퍼파라미터 튜닝 모델의 재학습에 이용될 것임
 def callback_sets(monitor, mode, patience, savepath):
     '''
     callback_sets
