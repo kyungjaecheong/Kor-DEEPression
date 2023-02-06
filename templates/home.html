@@ -41,12 +41,12 @@
 </head>
 
 <body>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-primary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
                     <img src="../static/imgs/brain-heart-32.png" alt="Kor-DEEPression">
-                    K - DEEPression
+                    K-DEEPression
                 </a>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -55,6 +55,7 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link active" href="#">
+                                <img src="../static/icons/favicon-16x16.png" alt="Kor-DEEPression Logo">
                                 Home
                                 <span class="visually-hidden">(current)</span>
                             </a>
@@ -65,22 +66,24 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#dashboard">
+                            <a class="nav-link" href="/dashboard">
                                 Trend
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/info">
-                                Information
                             </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                Links
+                                About
                             </a>
                             <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/info">
+                                    <img src="../static/icons/favicon-16x16.png">
+                                    Program Information
+                                </a>
+                                <a class="dropdown-item" href="/contact">
+                                    <img src="../static/imgs/head-heart-16.png">
+                                    Contact Information
+                                </a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/kyungjaecheong/Kor-DEEPression">
                                     <img src="https://github.githubassets.com/favicons/favicon.svg" style="width: 16px; height: 16px;">
                                     (Repo) Korean-DEEPression
@@ -92,7 +95,7 @@
                                 </a>
                             </div>
                         </li>
-                    </ul>
+                    </ul>                    
                 </div>
             </div>
         </nav>
@@ -101,31 +104,82 @@
     <div class="container">
         <div class="page-header">
             <div class="row">
-                <div class="col-lg-12">
-                    <img src="../static/imgs/brain-heart-192.png">
-                    <br><br>
-                    <h1 id="top-title">K - DEEPression</h1>
-                    <br>
-                    <p class="lead">AI 딥러닝 기반<br>한국형 우울증<br>예측 프로그램</p>
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <img src="../static/icons/apple-icon-180x180.png">
+                    <h1 id="top-title">Korean<br>DEEPression</h1>
                 </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <p class="lead">AI 딥러닝 기반<br>한국형 우울증<br>예측/진단 프로그램</p>
+                </div>
+                <div class="col-md-4"></div>
             </div>
         </div>
     </div>
 
-    <div class="container" id="dashboard">
+    <div class="container">
         <div class="bs-docs-section">
             <div class="row">
-                <div class="col-lg-12">
-                    <img src="../static/imgs/head-heart-192.png">
-                    <br><br>
-                    <h1>Trend Dashboard</h1>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <h2>예측<br>바로가기</h2>
                     <br>
-                    <p class="lead">대시보드가 들어갈 자리입니다.</p>
+                    <a href="/prediction" class="btn btn-lg btn-outline-primary" style="width: 160px;">Prediction</a>
+                    <br><br>
                 </div>
+                <div class="col-md-3">
+                    <h2>트렌드<br>바로가기</h2>
+                    <br>
+                    <a href="/dashboard" class="btn btn-lg btn-outline-primary" style="width: 160px;">Dashboard</a>
+                    <br><br>
+                </div>
+                <div class="col-md-3"></div>
             </div>
         </div>
     </div>
 
+    <div class="container">
+        <div class="bs-docs-section">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <h2>프로그램<br>정보</h2>
+                    <br>
+                    <a href="/info" class="btn btn-lg btn-outline-primary" style="width: 160px;">Information</a>
+                    <br><br>
+                </div>
+                <div class="col-md-3">
+                    <h2>개발자<br>정보</h2>
+                    <br>
+                    <a href="/contact" class="btn btn-lg btn-outline-primary" style="width: 160px;">Contact</a>
+                    <br><br>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div class="row">
+            <div class="col-md-12">                
+                <p>
+                    <a href="#">Back to Top</a>
+                </p>
+                <br>
+                <p>
+                    K-DEEPression
+                </p>
+                <p>
+                    Made by <a target="_blank" rel="noopener" href="https://github.com/kyungjaecheong">KyungJaeCheong</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    
     <!-- Bootstrap core JavaScript -->
     <script src="../static/js/bootstrap.bundle.min.js"></script>
 </body>

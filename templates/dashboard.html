@@ -64,20 +64,20 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard">
+                            <a class="nav-link active" href="#">
+                                <img src="../static/icons/favicon-16x16.png" alt="Kor-DEEPression Logo">
                                 Trend
+                                <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="../static/icons/favicon-16x16.png" alt="Kor-DEEPression Logo">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                 About
-                                <span class="visually-hidden">(current)</span>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item active" href="#">
+                                <a class="dropdown-item" href="/info">
                                     <img src="../static/icons/favicon-16x16.png">
-                                    Program Informations
+                                    Program Information
                                 </a>
                                 <a class="dropdown-item" href="/contact">
                                     <img src="../static/imgs/head-heart-16.png">
@@ -104,23 +104,51 @@
     <div class="container">
         <div class="page-header">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
                     <img src="../static/imgs/brain-heart-192.png">
-                    <br><br>
-                    <h1 id="top-title">Information<br>프로그램 정보</h1>
-                    <br>
-                    <h3>Codstates Project</h3>
-                    <p class="lead">본 웹사이트는<br>Codestates AI Bootcamp CP2<br>개인 Project를 수행하기 위해<br>제작 및 배포되었습니다.</p>
+                    <h1 id="top-title">Trend<br>Dashboard</h1>
                 </div>
+                <div class="col-md-2"></div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <h3>Github Repository Link</h3>
-                    <p class="lead">본 프로그램의 Source Code는<br>Github 레포지토리 링크를 통해<br>확인 하실 수 있습니다.</p>
-                    <a href="https://github.com/kyungjaecheong/Kor-DEEPression" target="_blank" class="btn btn-primary btn-lg" style="width: 300px; height: 50px;">
-                        <img src="https://github.githubassets.com/favicons/favicon.svg" style="width: 32px; height: 32px;"> Github Repository
-                    </a>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <p class="lead">한국인 우울증 트렌드</p>
                 </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="bs-docs-section">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <h2>Google<br>Looker Studio</h2>
+                    <br>
+                    <a href="https://lookerstudio.google.com/reporting/a44f286d-d07a-41e5-bdea-a357f733b4ca" target="_blank" class="btn btn-lg btn-outline-primary" style="width: 196px;">
+                        <img src="https://ssl.gstatic.com/datastudio/latest/static_images/pngs/favicon_looker_studio.png" style="width: 16px; height: 16px;">
+                        Looker Studio
+                    </a>
+                    <br><br>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="bs-docs-section">
+            <div class="row">
+                <div class="col-lg-2 col-md-1"></div>
+                <div class="col-lg-8 col-md-10">
+                    <div id="dash-area">
+                        <iframe id="dash-content" src="https://lookerstudio.google.com/embed/reporting/a44f286d-d07a-41e5-bdea-a357f733b4ca/page/XZOED" frameborder="0" style="border:0;" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-1"></div>
             </div>
         </div>
     </div>
@@ -141,7 +169,7 @@
             </div>
         </div>
     </footer>
-
+    
     <!-- Bootstrap core JavaScript -->
     <script src="../static/js/bootstrap.bundle.min.js"></script>
 </body>
