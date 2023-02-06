@@ -1,3 +1,4 @@
 *.ipynb linguist-detectable=false
 prediction.html linguist-detectable=false
 *.py linguist-detectable=true
+*.css linguist-detectable=true

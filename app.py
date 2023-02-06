@@ -83,12 +83,22 @@ def prediction():
             
             return render_template('result.html', pred=pred, prob=prob)
         except:
-            return render_template('404-2.html')
+            return render_template('404-2.html'), 404
+
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    if request.method == 'GET':
+        return render_template('dashboard.html'), 200
 
 @app.route('/info', methods=['GET'])
 def information():
     if request.method == 'GET':
         return render_template('info.html'), 200
+
+@app.route('/contact', methods=['GET'])
+def contact():
+    if request.method == 'GET':
+        return render_template('contact.html'), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

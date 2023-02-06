@@ -12,7 +12,7 @@ html {
 }
 
 body {
-    padding-top: 120px;
+    padding-top: 90px;
     text-align: center;
 }
 
@@ -26,6 +26,10 @@ h2 {
     font-size: 32px;
 }
 
+.navbar {
+    text-align: left;
+}
+
 .navbar-brand {
     font-size: 20px;
 }
@@ -35,26 +39,45 @@ h2 {
 }
 
 .nav-item .dropdown-menu {
-    text-align: center;
     font-size: 16px;
     background-color: #CBBBE8;
 }
 
 .container {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    /* padding-top: 24px; */
+    padding-bottom: 36px;
 }
 
 .bs-docs-section .bs-component {
-    padding-left: 15%;
-    padding-right: 5%;
     text-align: left;
 }
 
 .bs-component legend {
-    padding-left: 16px;
+    padding-left: 8px;
     padding-bottom: 8px;
     background-color: #343a40;
+}
+
+.form-group input {
+    width: 180px;
+}
+
+.form-group .form-check input {
+    width: 1em;
+}
+
+#dash-area {
+    position: relative;
+    width: 100%;
+    padding-bottom: 140%;
+}
+
+#dash-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 }
 
 footer {
