@@ -96,16 +96,18 @@ def prediction():
             # 최종 Model들 불러오기
             dir_depr = './tuning-models/CNN_depr.h5'
             dir_mdd = './tuning-models/MLP_mdd.h5'
-            model_depr, model_mdd = model_loads(dir_depr, dir_mdd)
+            # model_depr, model_mdd = model_loads(dir_depr, dir_mdd)
             
             # 우울증 예측 (정상vs우울증)
-            pred_depr, prob_depr = pred_prob(model_depr, list_encoded)
+            # pred_depr, prob_depr = pred_prob(model_depr, list_encoded)
+            prob_depr, pred_depr = model_pred_prob(dir_depr, list_encoded)
             
             # 우울증이 있는 경우 : 주요우울장애 예측 (경도우울증vs주요우울장애)
             if pred_depr == 1:
-                pred_mdd, prob_mdd = pred_prob(model_mdd, list_encoded)
+                # pred_mdd, prob_mdd = pred_prob(model_mdd, list_encoded)
+                prob_mdd, pred_mdd = model_pred_prob(dir_mdd, list_encoded)
             elif pred_depr == 0:
-                pred_mdd, prob_mdd = 0, 0
+                pred_mdd, prob_mdd = None, None
             
             # 오류없이 templates/result.html 실행(200)
             return render_template('result.html',
