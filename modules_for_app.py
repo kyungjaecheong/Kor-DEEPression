@@ -297,7 +297,6 @@ def Encoding_for_model(list_request, mode):
 
 
 # 조건에 따라 메모리 초과현상이 발견되어 메모리를 적게 쓰는 방법으로 재구성
-    # 속도를 높이기 위해 리스트를 tensor형태로 바꾼 뒤에 입력
     # with문을 통해 예측 진행 후 CPU 메모리 사용을 종료시키도록 함
 def model_pred_prob(model_dir, data):
     '''
@@ -312,16 +311,15 @@ def model_pred_prob(model_dir, data):
         probability : float (0 ~ 1)
         predict class : int (0 , 1)
     '''
-    # 속도 향상을 위해 Data(list)를 tensor로 변환하여 입력
-    tensor = tf.convert_to_tensor(data, dtype=tf.float32)
-    tensor_reshape = tf.reshape(tensor, shape=[1,47])
+    # Data(list)를 ndarray로 변환하여 입력
+    array = np.array(data).reshape(1, -1)
     
     # with문으로 예측 이후 동작을 멈추게 해본다
     with tf.device("/device:CPU:0"):
         # 모델 불러오기
         model = load_model(model_dir)
         # 예측 --> 확률값을 산출
-        pred_prob = model.predict(tensor_reshape, verbose=0)
+        pred_prob = model.predict(array, verbose=0)
         # 확률값 --> 예측 클래스를 산출 (Threshold=0.5)
         pred_class = np.where(pred_prob<0.5, 0, 1)
     
@@ -333,8 +331,7 @@ def model_pred_prob(model_dir, data):
 # test_list = [0.5,0.5,1]+[0 for _ in range(44)]
 
 # list를 ndarray가 아닌 tensor형태로 바꾸어 본다
-    # 속도는 훨씬 더 빠르지만 예측을 다시 할 때 Retracing Warning이 뜸..
-    # ndarray로 해도 같은 문제 발생.. 메모리를 지우는 방식을 고려해봐야할 듯 함
+    # 메모리 초과 발생 ... array로 실행
 # # test_tensor = tf.convert_to_tensor(test_list)
 # # test_tensor_reshape = tf.reshape(test_tensor,shape=[1,47])
 
