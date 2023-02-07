@@ -41,12 +41,12 @@
 </head>
 
 <body>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-primary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
                     <img src="../static/imgs/brain-heart-32.png" alt="Kor-DEEPression">
-                    K - DEEPression
+                    K-DEEPression
                 </a>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -60,27 +60,30 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="/prediction">
+                                <img src="../static/icons/favicon-16x16.png" alt="Kor-DEEPression Logo">
                                 Prediction
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/#dashboard">
+                            <a class="nav-link" href="/dashboard">
                                 Trend
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/info">
-                                Information
                             </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                Links
+                                About
                             </a>
                             <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/info">
+                                    <img src="../static/icons/favicon-16x16.png">
+                                    Program Information
+                                </a>
+                                <a class="dropdown-item" href="/contact">
+                                    <img src="../static/imgs/head-heart-16.png">
+                                    Contact Information
+                                </a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/kyungjaecheong/Kor-DEEPression">
                                     <img src="https://github.githubassets.com/favicons/favicon.svg" style="width: 16px; height: 16px;">
                                     (Repo) Korean-DEEPression
@@ -92,7 +95,7 @@
                                 </a>
                             </div>
                         </li>
-                    </ul>
+                    </ul>                    
                 </div>
             </div>
         </nav>
@@ -104,22 +107,67 @@
                 <div class="col-lg-12">
                     <img src="../static/imgs/head-heart-192.png">
                     <br><br>
-                    <h1 id="top-title">K - DEEPression</h1>
+                    <h1 id="top-title">K-DEEPression</h1>
+                    <p class="lead">한국형 우울증<br>진단/예측 프로그램</p>
                     <br>
-                    <p class="lead">우울증 진단</p>
                 </div>
             </div>
+            {% if pred_depr == 0 %}
             <div class="row">
-                <div class="col-lg-12">
-                    {% if pred and prob %}
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <h1>예측 결과</h1>
+                    <h2>{{pred_depr}}</h2>
+                    <h2>{{prob_depr}}</h2>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            {% endif %}
+            {% if pred_depr == 1 %}
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <h1>예측 결과</h1>
+                    <h2>{{pred_depr}}</h2>
+                    <h2>{{prob_depr}}</h2>
+                </div>
+                <div class="col-md-4">
+                    <h1>예측 결과</h1>
+                    <h2>{{pred_mdd}}</h2>
+                    <h2>{{prob_mdd}}</h2>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <!-- {% if pred and prob %}
                     <h1>예측 결과</h1>
                     <h2>{{pred}}</h2>
                     <h2>{{prob}} %</h2>
-                    {% endif %}
+                    {% endif %} -->
                 </div>
             </div>
         </div>
     </div>
+
+    <footer id="footer">
+        <div class="row">
+            <div class="col-md-12">                
+                <p>
+                    <a href="#">Back to Top</a>
+                </p>
+                <br>
+                <p>
+                    K-DEEPression
+                </p>
+                <p>
+                    Made by <a target="_blank" rel="noopener" href="https://github.com/kyungjaecheong">KyungJaeCheong</a>
+                </p>
+            </div>
+        </div>
+    </footer>
 
     <!-- Bootstrap core JavaScript -->
     <script src="../static/js/bootstrap.bundle.min.js"></script>
