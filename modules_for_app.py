@@ -10,34 +10,40 @@ Contributor : Kyung Jae, Cheong (정경재)
 
 # 함수 리스트 및 __all__ 정의(import * 할 때 불러올 함수들을 정의)
 # from custom_modules.postgresql_down import *
-__all__ = ['model_loads',
+__all__ = [#'model_loads',
            'Encoding_for_model',
-           'pred_prob']
+           #'pred_prob',
+           'model_pred_prob']
 
 
 # 라이브러리 import
 import numpy as np
 from keras.models import load_model
+import tensorflow as tf
+
+# tensorflow-cpu 경고문 출력 없애기
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-# 모델 불러오기 기능
-def model_loads(filedir_depr, filedir_mdd):
-    '''
-    model_loads
-        keras 모델 불러오기 기능
-    ---
-    입력 변수 정보
-        filedir : (str)불러올 파일의 디렉토리
-    ---
-    출력 : tuple(keras model objects)
-    '''
-    # Depression(정상vs우울) h5모델 불러오기
-    model_depr = load_model(filedir_depr)
-    # MDD(경도우울vs주요우울) h5모델 불러오기
-    model_mdd = load_model(filedir_mdd)
+# # 모델 불러오기 기능
+# def model_loads(filedir_depr, filedir_mdd):
+#     '''
+#     model_loads
+#         keras 모델 불러오기 기능
+#     ---
+#     입력 변수 정보
+#         filedir : (str)불러올 파일의 디렉토리
+#     ---
+#     출력 : tuple(keras model objects)
+#     '''
+#     # Depression(정상vs우울) h5모델 불러오기
+#     model_depr = load_model(filedir_depr)
+#     # MDD(경도우울vs주요우울) h5모델 불러오기
+#     model_mdd = load_model(filedir_mdd)
     
-    # model을 tuple형태로 반환    
-    return model_depr, model_mdd
+#     # model을 tuple형태로 반환    
+#     return model_depr, model_mdd
     
 
 # Model용 array를 얻는 함수(Feature Engineering)
@@ -255,34 +261,77 @@ def Encoding_for_model(list_request, mode):
         return ohe_list
 
 
-# 예측모델 예측실행 기능
-def pred_prob(model, data):
+# # 예측모델 예측실행 기능
+# def pred_prob(model, data):
+#     '''
+#     pred_prob
+#         모델을 통해 예측을 실행하는 함수, probability와 predict class를 반환
+#     ---
+#     입력 변수 정보
+#         model : (Keras Object) keras 모델
+#         data : (List)  
+#     ---
+#     출력 : 
+#         probability : float (0 ~ 1)
+#         predict class : int (0 , 1)
+#     '''
+#     # Data(list)를 array로 변환
+#     array = np.array(data).reshape(1,-1)
+    
+#     # Predict to Probability (확률값)
+#     predict_prob = model.predict(array, verbose=0)[0][0]
+    
+#     # Probability to Predict class (threshold = 0.5)
+#     if predict_prob => 0.5:
+#         pred = 0
+#     elif predict_prob < 0.5:
+#         pred = 1
+    
+#     # 확률 값을 웹페이지에서 출력하기 위해 퍼센트값으로 변환
+#     prob = int(round(predict_prob, 2)*100)
+    
+#     # 예측 클래스와 확률값을 반환
+#     return pred, prob
+
+# 조건에 따라 메모리 초과현상이 발견되어 메모리를 적게 쓰는 방법으로 재구성
+def model_pred_prob(model_dir, data):
     '''
-    pred_prob
-        모델을 통해 예측을 실행하는 함수, probability와 predict class를 반환
+    model_pred_prob
+        모델 불러오기 및 예측기능
     ---
     입력 변수 정보
-        model : (Keras Object) keras 모델
-        data : (List)  
+        model_dir : (str) 불러올 모델의 디렉토리
+        data : (list) 예측을 위한 데이터 리스트
     ---
-    출력 : 
+    출력 변수
         probability : float (0 ~ 1)
         predict class : int (0 , 1)
     '''
+    # list를 ndarray가 아닌 tensor형태로 바꾸어 본다(Retracing Warning 뜸..)
+    # tensor = tf.convert_to_tensor(data)
+    # tensor_reshape = tf.reshape(tensor, shape=[1,47])
+    
     # Data(list)를 array로 변환
     array = np.array(data).reshape(1,-1)
     
-    # Predict --> Probability (확률값)
-    predict_prob = model.predict(array, verbose=0)[0][0]
-    
-    # Probability --> Predict class (threshold = 0.5)
-    if predict_prob < 0.5:
-        pred = 0
-    elif predict_prob >= 0.5:
-        pred = 1
-    
-    # 확률 값을 웹페이지에서 출력하기 위해 퍼센트값으로 변환
-    prob = int(round(predict_prob, 2)*100)
-    
-    # 예측 클래스와 확률값을 반환
-    return pred, prob
+    # with문으로 예측 이후 동작을 멈추게 해본다
+    with tf.device("/device:CPU:0"):
+        model = load_model(model_dir)
+        pred_prob = model.predict(array, verbose=0)
+        pred_class = np.where(pred_prob<0.5, 0, 1)
+    return pred_prob[0][0], pred_class[0][0]
+
+
+# ---테스트용 코드---
+# test_list = [0.5,0.5,1]+[0 for _ in range(44)]
+
+# # test_tensor = tf.convert_to_tensor(test_list)
+# # test_tensor_reshape = tf.reshape(test_tensor,shape=[1,47])
+# test_dir = './tuning-models/CNN_depr.h5'
+# # with tf.device("/device:CPU:0"):
+# #     model = load_model(test_dir)
+# #     test_prob = model.predict(test_tensor_reshape)
+# # print(test_prob)
+
+# test_prob, test_class = model_pred_prob(test_dir, test_list)
+# print(test_prob, test_class)
