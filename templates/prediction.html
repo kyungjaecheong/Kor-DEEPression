@@ -93,6 +93,10 @@
                                     <img src="https://github.githubassets.com/favicons/favicon.svg" style="width: 16px; height: 16px;">
                                     (Github) Kyung-Jae Cheong
                                 </a>
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://velog.io/@dankj1991">
+                                    <img src="https://static.velog.io/favicons/favicon-32x32.png" style="width: 16px; height: 16px;">
+                                    (Blog) Kyung-Jae Cheong
+                                </a>
                             </div>
                         </li>
                     </ul>                    
@@ -682,14 +686,14 @@
                                     </label>
                                     <small id="height-help" class="form-text text-muted">
                                         <br>
-                                        - 소수점으로도 입력 하실 수 있습니다<br>
-                                        - 입력 범위 : 100 ~ 200 (정수,실수)<br>
+                                        - 소수점 첫째자리까지 입력 가능합니다<br>
+                                        - 입력 범위 : 100 ~ 200.0 (정수,실수)<br>
                                         - 키가 1m 이하인 경우 "100"을 입력<br>
                                         - 키가 2m 이상인 경우 "200"을 입력<br>
                                         <br>
                                     </small>
                                     키
-                                    <input name="height" type="number" class="form-control-lg" id="input-height" aria-describedby="height-help" min="100" max="200" placeholder="100 ~ 200" required>
+                                    <input name="height" type="number" class="form-control-lg" id="input-height" aria-describedby="height-help" min="100" max="200" step="0.1" placeholder="100 ~ 200" required>
                                     cm<br>
                                 </div>
                                 <br>
@@ -699,14 +703,14 @@
                                     </label>
                                     <small id="weight-help" class="form-text text-muted">
                                         <br>
-                                        - 소수점으로도 입력 하실 수 있습니다<br>
+                                        - 소수점 첫째자리까지 입력 가능합니다<br>
                                         - 입력 범위 : 30 ~ 150 (정수, 실수)<br>
                                         - 몸무게가 30kg 이하인 경우 "30"을 입력<br>
                                         - 몸무게가 150kg 이상인 경우 "150"을 입력<br>
                                         <br>
                                     </small>
                                     몸무게
-                                    <input name="weight" type="number" class="form-control-lg" id="input-weight" aria-describedby="weight-help" min="30" max="150" placeholder="30 ~ 150" required>
+                                    <input name="weight" type="number" class="form-control-lg" id="input-weight" aria-describedby="weight-help" min="30" max="150" step="0.1" placeholder="30 ~ 150" required>
                                     kg<br>
                                 </div>
                             </fieldset>
