@@ -93,6 +93,10 @@
                                     <img src="https://github.githubassets.com/favicons/favicon.svg" style="width: 16px; height: 16px;">
                                     (Github) Kyung-Jae Cheong
                                 </a>
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://velog.io/@dankj1991">
+                                    <img src="https://static.velog.io/favicons/favicon-32x32.png" style="width: 16px; height: 16px;">
+                                    (Blog) Kyung-Jae Cheong
+                                </a>
                             </div>
                         </li>
                     </ul>                    
@@ -105,49 +109,155 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-lg-12">
-                    <img src="../static/imgs/head-heart-192.png">
+                    <img src="../static/imgs/head-heart-144.png">
                     <br><br>
                     <h1 id="top-title">K-DEEPression</h1>
                     <p class="lead">한국형 우울증<br>진단/예측 프로그램</p>
-                    <br>
                 </div>
             </div>
             {% if pred_depr == 0 %}
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <h1>예측 결과</h1>
-                    <h2>{{pred_depr}}</h2>
-                    <h2>{{prob_depr}}</h2>
+                <div class="col-md-3 col-lg-4"></div>
+                <div class="col-md-6 col-lg-4">
+                    <br><br>
+                    Depression
+                    <h1 style="background-color: #343a40;">우울증<br>예측 결과</h1>
+                    <br>
+                    <h2>정상<br>(Normal)</h2>
+                    <br>
+                    <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
+                    <p style="background-color: #343a40;">
+                        우울증 진단 확률 값은<br>{{prob_depr}} %로,
+                        <br>
+                        이는 "정상" 군에<br>해당하는 수치입니다.
+                        <br>
+                        <small class="text-muted">
+                            확률값이 50% 이상일때 우울증으로 분류
+                        </small>
+                    </p>
+                    <br><br>
+                    <h3>
+                        <img src="../static/imgs/head-heart-32.png">
+                        우울증(Depression)<br>예측 모델
+                    </h3>
+                    <p>
+                        Deep-Learning 1D-CNN<br>
+                        <small class="text-muted">
+                            (Convolutional Neural Networks)
+                            <br>
+                            Modeling by Tensorflow(Keras)
+                        </small>
+                    </p>
+                    <h5>검증 정확도(Accuracy)</h5>
+                    <p>84 % (0.8366)</p>
+                    <h5>검증 ROC_AUC score</h5>
+                    <p>83 % (0.8291)</p>
                 </div>
-                <div class="col-md-2"></div>
+                <div class="col-md-3 col-lg-4"></div>
             </div>
             {% endif %}
             {% if pred_depr == 1 %}
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
-                    <h1>예측 결과</h1>
-                    <h2>{{pred_depr}}</h2>
-                    <h2>{{prob_depr}}</h2>
+                    <br><br>
+                    Depression
+                    <h1 style="background-color: #343a40;">우울증<br>예측 결과</h1>
+                    <br>
+                    <h2>우울증<br>(Depression)</h2>
+                    <br>
+                    <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
+                    <p style="background-color: #343a40;">
+                        우울증 진단 확률 값은<br>{{prob_depr}} %로,
+                        <br>
+                        이는 "우울증" 군에<br>해당하는 수치입니다.
+                        <br>
+                        <small class="text-muted">
+                            확률값이 50% 이상일때 우울증으로 분류
+                        </small>
+                    </p>
+                    <br><br>
+                    <h3>
+                        <img src="../static/imgs/head-heart-32.png">
+                        우울증(Depression)<br>예측 모델
+                    </h3>
+                    <p>
+                        Deep-Learning 1D-CNN<br>
+                        <small class="text-muted">
+                            (Convolutional Neural Networks)
+                            <br>
+                            Modeling by Tensorflow(Keras)
+                        </small>
+                    </p>
+                    <h5>검증 정확도(Accuracy)</h5>
+                    <p>84 % (0.8366)</p>
+                    <h5>검증 ROC_AUC score</h5>
+                    <p>83 % (0.8291)</p>
                 </div>
                 <div class="col-md-4">
-                    <h1>예측 결과</h1>
-                    <h2>{{pred_mdd}}</h2>
-                    <h2>{{prob_mdd}}</h2>
+                    <br><br>
+                    Major Depressive Disorder
+                    <h1 style="background-color: #343a40;">주요우울장애<br>추가예측 결과</h1>
+                    <br>
+                    <h2>{{mdd_class}}<br><br></h2>
+                    <br>
+                    <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
+                    <p style="background-color: #343a40;">
+                        주요우울장애 확률 값은<br>{{prob_mdd}} %로,
+                        <br>
+                        이는 "{{mdd_class}}" 군에<br>해당하는 수치입니다.
+                        <br>
+                        <small class="text-muted">
+                            확률값이 50% 이상일때 MDD로 분류
+                        </small>
+                    </p>
+                    <br><br>
+                    <h3>
+                        <img src="../static/imgs/head-heart-32.png">
+                        주요우울장애(MDD)<br>예측 모델
+                    </h3>
+                    <p>
+                        Deep-Learning MLP<br>
+                        <small class="text-muted">
+                            (Multi-Layer Perceptron)
+                            <br>
+                            Modeling by Tensorflow(Keras)
+                        </small>
+                    </p>
+                    <h5>검증 정확도(Accuracy)</h5>
+                    <p>77 % (0.7722)</p>
+                    <h5>검증 ROC_AUC score</h5>
+                    <p>78 % (0.7838)</p>
                 </div>
                 <div class="col-md-2"></div>
             </div>
             {% endif %}
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-                    <!-- {% if pred and prob %}
-                    <h1>예측 결과</h1>
-                    <h2>{{pred}}</h2>
-                    <h2>{{prob}} %</h2>
-                    {% endif %} -->
+                <div class="col-md-3 col-lg-4"></div>
+                <div class="col-md-6 col-lg-4">
+                    <br><br><br>
+                    <h3 style="background-color: #343a40;">설문에 참여해주셔서<br>감사드립니다.</h3>
+                        <p>
+                            입력된 설문의 개인정보는<br>수집 및 저장되지 않습니다.
+                        </p>
+                    <br>
+                    <h2>예측 다시하기</h2>
+                    <a href="/prediction">
+                        <button type="button" class="btn btn-outline-primary btn-lg">
+                            <img src="../static/imgs/head-heart-32.png">
+                            Prediction
+                        </button>
+                    </a>
+                    <br><br>
+                    <h2>홈으로 돌아가기</h2>
+                    <a href="/">
+                        <button type="button" class="btn btn-outline-primary btn-lg">
+                            <img src="../static/icons/favicon-32x32.png">
+                            Go to Home
+                        </button>
+                    </a>
                 </div>
+                <div class="col-md-3 col-lg-4"></div>
             </div>
         </div>
     </div>

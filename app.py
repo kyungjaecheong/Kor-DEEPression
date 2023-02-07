@@ -30,7 +30,7 @@ def prediction():
     # POST request(submit으로부터 실행)
     if request.method == 'POST':
         try:
-        # Request Form 으로부터 변수 얻어내는 과정부터 실시함
+        # Request Form 으로부터 변수를 가져오는 과정부터 실시함
             
             # 범주형_1 (Gender ~ Subjective Health) (Q1 ~ Q6, 6개)
             # Q 1. Gender [1,2]
@@ -96,40 +96,64 @@ def prediction():
             # 최종 Model들 불러오기
             dir_depr = './tuning-models/CNN_depr.h5'
             dir_mdd = './tuning-models/MLP_mdd.h5'
-            # model_depr, model_mdd = model_loads(dir_depr, dir_mdd)
+            # model_depr, model_mdd = model_loads(dir_depr, dir_mdd)        # 배포 과정에서 CPU메모리초과 발생
             
             # 우울증 예측 (정상vs우울증)
-            # pred_depr, prob_depr = pred_prob(model_depr, list_encoded)
+            # pred_depr, prob_depr = pred_prob(model_depr, list_encoded)    # 배포 과정에서 CPU메모리초과 발생
             prob_depr, pred_depr = model_pred_prob(dir_depr, list_encoded)
+            # 확률값을 퍼센트로 변환 (둘째자리까지 표기)
+            percent_depr = int(round(prob_depr,4)*10000)/100
             
-            # 우울증이 있는 경우 : 주요우울장애 예측 (경도우울증vs주요우울장애)
+            # 우울증이 있는 경우 : 주요우울장애(MDD) 예측 (경도우울증vs주요우울장애)
             if pred_depr == 1:
-                # pred_mdd, prob_mdd = pred_prob(model_mdd, list_encoded)
+                # pred_mdd, prob_mdd = pred_prob(model_mdd, list_encoded)   # 배포 과정에서 CPU메모리초과 발생
                 prob_mdd, pred_mdd = model_pred_prob(dir_mdd, list_encoded)
+                # 확률값을 퍼센트로 변환 (둘째자리까지 표기)
+                percent_mdd = int(round(prob_mdd,4)*10000)/100
+            # 우울증이 없는 경우 : 주요우울장애(MDD) 예측 X
             elif pred_depr == 0:
-                pred_mdd, prob_mdd = None, None
+                prob_mdd, pred_mdd, percent_mdd = None, None, None
             
-            # 오류없이 templates/result.html 실행(200)
+            # pred_mdd를 문자열로 이용하기위해 변환하는 과정(결과에 따라 다르게 출력하기 위함)
+            mdd_class = str()
+            if pred_mdd == 0:
+                mdd_class = "경도우울증"
+            elif pred_mdd == 1:
+                mdd_class = "주요우울장애"
+            
+            # 오류없이 예측을 마친 경우 : templates/result.html 실행(200)
             return render_template('result.html',
-                                   pred_depr=pred_depr, prob_depr=prob_depr,
-                                   pred_mdd=pred_mdd, prob_mdd=prob_mdd), 200
+                                   pred_depr=pred_depr, prob_depr=percent_depr,
+                                   mdd_class=mdd_class, prob_mdd=percent_mdd), 200
+        
+        # try문에서 에러가 발생한 경우 : templates/404.html 실행(404)
         except:
             return render_template('404-2.html'), 404
 
+# dashboard page 실행함수(GET)
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
+    # GET request
     if request.method == 'GET':
+        # templates/dashboard.html 실행(200)
         return render_template('dashboard.html'), 200
 
+# 프로그램 information page 실행함수(GET)
 @app.route('/info', methods=['GET'])
 def information():
+    # GET request
     if request.method == 'GET':
+        # templates/info.html 실행(200)
         return render_template('info.html'), 200
 
+# 개발자 정보 page 실행함수(GET)
 @app.route('/contact', methods=['GET'])
 def contact():
+    # GET request
     if request.method == 'GET':
+        # templates/info.html 실행(200)
         return render_template('contact.html'), 200
 
+# app.py파일 실행시 실행시킬 함수 : app
 if __name__ == '__main__':
     app.run(debug=True)

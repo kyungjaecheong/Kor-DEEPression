@@ -1,7 +1,7 @@
 '''
 Custom Modules for Step 3 Deployment
 
-Project (Step) : Kor-Deepression (Step 2 : Modeling)
+Project (Step) : Kor-Deepression (Step 3 : Deployment)
 
 Project_repo_url : https://github.com/kyungjaecheong/Kor-DEEPression
 
@@ -10,8 +10,8 @@ Contributor : Kyung Jae, Cheong (정경재)
 
 # 함수 리스트 및 __all__ 정의(import * 할 때 불러올 함수들을 정의)
 # from custom_modules.postgresql_down import *
-__all__ = [#'model_loads',
-           'Encoding_for_model',
+__all__ = ['Encoding_for_model',
+           #'model_loads',
            #'pred_prob',
            'model_pred_prob']
 
@@ -26,27 +26,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-# # 모델 불러오기 기능
-# def model_loads(filedir_depr, filedir_mdd):
-#     '''
-#     model_loads
-#         keras 모델 불러오기 기능
-#     ---
-#     입력 변수 정보
-#         filedir : (str)불러올 파일의 디렉토리
-#     ---
-#     출력 : tuple(keras model objects)
-#     '''
-#     # Depression(정상vs우울) h5모델 불러오기
-#     model_depr = load_model(filedir_depr)
-#     # MDD(경도우울vs주요우울) h5모델 불러오기
-#     model_mdd = load_model(filedir_mdd)
-    
-#     # model을 tuple형태로 반환    
-#     return model_depr, model_mdd
-    
-
-# Model용 array를 얻는 함수(Feature Engineering)
+# Model용 데이터를 얻는 함수(Feature Engineering)
 def Encoding_for_model(list_request, mode):
     '''
     Encoding_for_model
@@ -261,6 +241,28 @@ def Encoding_for_model(list_request, mode):
         return ohe_list
 
 
+# --- 모델과 예측기능으로 나누어 진행했었지만, 조건에따라 메모리가 초과되어버리는 문제 발생
+
+# # 모델 불러오기 기능
+# def model_loads(filedir_depr, filedir_mdd):
+#     '''
+#     model_loads
+#         keras 모델 불러오기 기능
+#     ---
+#     입력 변수 정보
+#         filedir : (str)불러올 파일의 디렉토리
+#     ---
+#     출력 : tuple(keras model objects)
+#     '''
+#     # Depression(정상vs우울) h5모델 불러오기
+#     model_depr = load_model(filedir_depr)
+#     # MDD(경도우울vs주요우울) h5모델 불러오기
+#     model_mdd = load_model(filedir_mdd)
+    
+#     # model을 tuple형태로 반환    
+#     return model_depr, model_mdd
+
+
 # # 예측모델 예측실행 기능
 # def pred_prob(model, data):
 #     '''
@@ -293,7 +295,10 @@ def Encoding_for_model(list_request, mode):
 #     # 예측 클래스와 확률값을 반환
 #     return pred, prob
 
+
 # 조건에 따라 메모리 초과현상이 발견되어 메모리를 적게 쓰는 방법으로 재구성
+    # 속도를 높이기 위해 리스트를 tensor형태로 바꾼 뒤에 입력
+    # with문을 통해 예측 진행 후 CPU 메모리 사용을 종료시키도록 함
 def model_pred_prob(model_dir, data):
     '''
     model_pred_prob
@@ -307,26 +312,32 @@ def model_pred_prob(model_dir, data):
         probability : float (0 ~ 1)
         predict class : int (0 , 1)
     '''
-    # list를 ndarray가 아닌 tensor형태로 바꾸어 본다(Retracing Warning 뜸..)
-    # tensor = tf.convert_to_tensor(data)
-    # tensor_reshape = tf.reshape(tensor, shape=[1,47])
-    
-    # Data(list)를 array로 변환
-    array = np.array(data).reshape(1,-1)
+    # 속도 향상을 위해 Data(list)를 tensor로 변환하여 입력
+    tensor = tf.convert_to_tensor(data, dtype=tf.float32)
+    tensor_reshape = tf.reshape(tensor, shape=[1,47])
     
     # with문으로 예측 이후 동작을 멈추게 해본다
     with tf.device("/device:CPU:0"):
+        # 모델 불러오기
         model = load_model(model_dir)
-        pred_prob = model.predict(array, verbose=0)
+        # 예측 --> 확률값을 산출
+        pred_prob = model.predict(tensor_reshape, verbose=0)
+        # 확률값 --> 예측 클래스를 산출 (Threshold=0.5)
         pred_class = np.where(pred_prob<0.5, 0, 1)
+    
+    # 확률값과 예측클래스를 최종적으로 출력함
     return pred_prob[0][0], pred_class[0][0]
 
 
 # ---테스트용 코드---
 # test_list = [0.5,0.5,1]+[0 for _ in range(44)]
 
+# list를 ndarray가 아닌 tensor형태로 바꾸어 본다
+    # 속도는 훨씬 더 빠르지만 예측을 다시 할 때 Retracing Warning이 뜸..
+    # ndarray로 해도 같은 문제 발생.. 메모리를 지우는 방식을 고려해봐야할 듯 함
 # # test_tensor = tf.convert_to_tensor(test_list)
 # # test_tensor_reshape = tf.reshape(test_tensor,shape=[1,47])
+
 # test_dir = './tuning-models/CNN_depr.h5'
 # # with tf.device("/device:CPU:0"):
 # #     model = load_model(test_dir)
