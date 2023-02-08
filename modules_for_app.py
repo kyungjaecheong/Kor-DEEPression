@@ -8,24 +8,6 @@ Project_repo_url : https://github.com/kyungjaecheong/Kor-DEEPression
 Contributor : Kyung Jae, Cheong (정경재)
 '''
 
-# 함수 리스트 및 __all__ 정의(import * 할 때 불러올 함수들을 정의)
-# from custom_modules.postgresql_down import *
-__all__ = ['Encoding_for_model',
-           #'model_loads',
-           #'pred_prob',
-           'model_pred_prob']
-
-
-# 라이브러리 import
-import numpy as np
-from keras.models import load_model
-import tensorflow as tf
-
-# tensorflow-cpu 경고문 출력 없애기
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
-
 # Model용 데이터를 얻는 함수(Feature Engineering)
 def Encoding_for_model(list_request, mode):
     '''
@@ -296,51 +278,54 @@ def Encoding_for_model(list_request, mode):
 #     return pred, prob
 
 
-# 조건에 따라 메모리 초과현상이 발견되어 메모리를 적게 쓰는 방법으로 재구성
-    # with문을 통해 예측 진행 후 CPU 메모리 사용을 종료시키도록 함
-def model_pred_prob(model_dir, data):
-    '''
-    model_pred_prob
-        모델 불러오기 및 예측기능
-    ---
-    입력 변수 정보
-        model_dir : (str) 불러올 모델의 디렉토리
-        data : (list) 예측을 위한 데이터 리스트
-    ---
-    출력 변수
-        probability : float (0 ~ 1)
-        predict class : int (0 , 1)
-    '''
-    # Data(list)를 ndarray로 변환하여 입력
-    array = np.array(data).reshape(1, -1)
+# # 조건에 따라 메모리 초과현상이 발견되어 메모리를 적게 쓰는 방법으로 재구성
+#     # with문을 통해 예측 진행 후 CPU 메모리 사용을 종료시키도록 함
+# def model_pred_prob(model_dir, data):
+#     '''
+#     model_pred_prob
+#         모델 불러오기 및 예측기능
+#     ---
+#     입력 변수 정보
+#         model_dir : (str) 불러올 모델의 디렉토리
+#         data : (list) 예측을 위한 데이터 리스트
+#     ---
+#     출력 변수
+#         probability : float (0 ~ 1)
+#         predict class : int (0 , 1)
+#     '''
+#     # Data(list)를 ndarray로 변환하여 입력
+#     array = np.array(data).reshape(1, -1)
     
-    # with문으로 예측 이후 동작을 멈추게 해본다
-    with tf.device("/device:CPU:0"):
-        # 모델 불러오기
-        model = load_model(model_dir)
+#     # with문으로 예측 이후 동작을 멈추게 해본다
+#     with tf.device("/device:CPU:0"):
+#         # 모델 불러오기
+#         model = load_model(model_dir)
         
-        # 예측 --> 확률값을 산출
-        pred_prob = model.predict(array, verbose=0)
-        # 확률 값만 뽑아내어 저장
-        prob = pred_prob[0][0]
+#         # 예측 --> 확률값을 산출
+#         pred_prob = model.predict(array, batch_size=1, verbose=0, steps=1)
+#         # 확률 값만 뽑아내어 저장
+#         prob = pred_prob[0][0]
         
-        # 확률값 --> 예측 클래스를 산출 (Threshold=0.5)
-        pred_class = np.where(pred_prob<0.5, 0, 1)
-        # 예측 클래스 값만 뽑아내어 저장
-        pred = pred_class[0][0]
+#         # 확률값 --> 예측 클래스를 산출 (Threshold=0.5)
+#         pred_class = np.where(pred_prob<0.5, 0, 1)
+#         # 예측 클래스 값만 뽑아내어 저장
+#         pred = pred_class[0][0]
     
-    # 불필요한 Retracing방지를 위해 필요없는 변수들은 전부 삭제
-    del array
-    del model
-    del pred_prob
-    del pred_class
+#     # 불필요한 Retracing방지를 위해 필요없는 변수들은 전부 삭제
+#     del array
+#     del model
+#     del pred_prob
+#     del pred_class
     
-    # 확률값과 예측클래스를 최종적으로 출력함
-    return prob, pred
+#     # 확률값과 예측클래스를 최종적으로 출력함
+#     return prob, pred
 
 
 # ---테스트용 코드---
 # test_list = [0.5,0.5,1]+[0 for _ in range(44)]
+
+# Data(list)를 ndarray로 변환하여 입력
+    # array = np.array(test_list).reshape(1, -1)
 
 # list를 ndarray가 아닌 tensor형태로 바꾸어 본다
     # 메모리 초과 발생 ... array로 실행
