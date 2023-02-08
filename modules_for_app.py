@@ -318,13 +318,25 @@ def model_pred_prob(model_dir, data):
     with tf.device("/device:CPU:0"):
         # 모델 불러오기
         model = load_model(model_dir)
+        
         # 예측 --> 확률값을 산출
         pred_prob = model.predict(array, verbose=0)
+        # 확률 값만 뽑아내어 저장
+        prob = pred_prob[0][0]
+        
         # 확률값 --> 예측 클래스를 산출 (Threshold=0.5)
         pred_class = np.where(pred_prob<0.5, 0, 1)
+        # 예측 클래스 값만 뽑아내어 저장
+        pred = pred_class[0][0]
+    
+    # 불필요한 Retracing방지를 위해 필요없는 변수들은 전부 삭제
+    del array
+    del model
+    del pred_prob
+    del pred_class
     
     # 확률값과 예측클래스를 최종적으로 출력함
-    return pred_prob[0][0], pred_class[0][0]
+    return prob, pred
 
 
 # ---테스트용 코드---
@@ -343,3 +355,9 @@ def model_pred_prob(model_dir, data):
 
 # test_prob, test_class = model_pred_prob(test_dir, test_list)
 # print(test_prob, test_class)
+
+# import json
+# with open('./form_labels.json', 'r', encoding='utf-8') as jf:
+#     json_reader = json.load(jf)
+# test_gender = 1
+# print(json_reader["gender"][f"{test_gender}"])

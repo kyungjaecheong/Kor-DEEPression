@@ -138,7 +138,7 @@
                     <br><br>
                     <h3>
                         <img src="../static/imgs/head-heart-32.png">
-                        우울증(Depression)<br>예측 모델
+                        예측 모델 정보
                     </h3>
                     <p>
                         Deep-Learning 1D-CNN<br>
@@ -155,11 +155,10 @@
                 </div>
                 <div class="col-md-3 col-lg-4"></div>
             </div>
-            {% endif %}
-            {% if pred_depr == 1 %}
+            {% elif pred_depr == 1 %}
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
+                <div class="col-md-3 col-lg-4"></div>
+                <div class="col-md-6 col-lg-4">
                     <br><br>
                     Depression
                     <h1 style="background-color: #343a40;">우울증<br>예측 결과</h1>
@@ -179,7 +178,7 @@
                     <br><br>
                     <h3>
                         <img src="../static/imgs/head-heart-32.png">
-                        우울증(Depression)<br>예측 모델
+                        예측 모델 정보
                     </h3>
                     <p>
                         Deep-Learning 1D-CNN<br>
@@ -194,6 +193,30 @@
                     <h5>검증 ROC_AUC score</h5>
                     <p>83 % (0.8291)</p>
                 </div>
+                <div class="col-md-3 col-lg-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-4"></div>
+                <div class="col-md-6 col-lg-4">
+                    <br><br>
+                    Major Depressive Disorder
+                    <h1 style="background-color: #343a40;">주요우울장애<br>추가 예측 기능</h1>
+                    추가 예측을 원하신다면<br>아래 버튼을 클릭해주십시오<br>
+                    <form action="/result" method="post">
+                        <div class="d-grid gap-2">
+                            <button class="source-button btn btn-primary btn-lg" type="submit" name="predict_type" value="mdd">
+                                <img src="../static/imgs/head-heart-32.png">
+                                Predict MDD
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3 col-lg-4"></div>
+            </div>
+            {% endif %}
+            {% if mdd_class and prob_mdd %}
+            <div class="row">
+                <div class="col-md-2"></div>
                 <div class="col-md-4">
                     <br><br>
                     Major Depressive Disorder
@@ -228,6 +251,41 @@
                     <p>77 % (0.7722)</p>
                     <h5>검증 ROC_AUC score</h5>
                     <p>78 % (0.7838)</p>
+                </div>
+                <div class="col-md-4">
+                    <br><br>
+                    Depression
+                    <h1 style="background-color: #343a40;">우울증<br>예측 결과</h1>
+                    <br>
+                    <h2>우울증<br>(Depression)</h2>
+                    <br>
+                    <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
+                    <p style="background-color: #343a40;">
+                        우울증 진단 확률 값은<br>{{prob_depr}} %로,
+                        <br>
+                        이는 "우울증" 군에<br>해당하는 수치입니다.
+                        <br>
+                        <small class="text-muted">
+                            확률값이 50% 이상일때 우울증으로 분류
+                        </small>
+                    </p>
+                    <br><br>
+                    <h3>
+                        <img src="../static/imgs/head-heart-32.png">
+                        우울증(Depression)<br>예측 모델
+                    </h3>
+                    <p>
+                        Deep-Learning 1D-CNN<br>
+                        <small class="text-muted">
+                            (Convolutional Neural Networks)
+                            <br>
+                            Modeling by Tensorflow(Keras)
+                        </small>
+                    </p>
+                    <h5>검증 정확도(Accuracy)</h5>
+                    <p>84 % (0.8366)</p>
+                    <h5>검증 ROC_AUC score</h5>
+                    <p>83 % (0.8291)</p>
                 </div>
                 <div class="col-md-2"></div>
             </div>
