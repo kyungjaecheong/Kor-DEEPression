@@ -66,6 +66,26 @@ h2 {
     width: 1em;
 }
 
+#check-values {
+    padding-top: 90px;
+}
+
+#check-table {
+    font-size: 16px;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+#check-table tbody th {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#check-table tbody td {
+    text-align: left;
+    margin: 0 auto;
+}
+
 #dash-area {
     position: relative;
     width: 100%;
