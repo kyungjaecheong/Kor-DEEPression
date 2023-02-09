@@ -19,6 +19,7 @@ __all__ = ['table_initialization',
 import csv
 import json
 
+
 # 테이블 초기화 기능(features-->범주형변수들-->targets-->id_year)
 # 외래키를 가진 테이블(자식)부터 제거해야하므로 순서가 중요함
 def table_initialization(cursor, table_list):
@@ -137,6 +138,9 @@ def insertion_csv(cursor, table_name, path):
         # copy_from으로 csv데이터를 통째로 입력하기
         cursor.copy_from(cf, table_name, sep=',')
 
+
+# json data를 RDB에 입력하는 기능
+# 데이터 수가 많지 않기 때문에 executemany 방식으로 데이터를 입력
 def insertion_json(cursor, table_list, path):
     '''
     insertion_json

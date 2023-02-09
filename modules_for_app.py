@@ -77,7 +77,7 @@ def Encoding_for_model(list_request, mode):
         # Encoding을 따로 거칠 필요는 없어서 최종 리스트를 바로 반환
         return [limitation, modality, w_ch_no_con, high_bp, diabetes, high_lipid]
     
-    # 범주형변수 (One_Hot_Encoding)
+    # 범주형변수 (One_Hot_Encoding) (총 10개) --> (총 39개)
     elif mode == "category":
         # 변수리스트를 튜플로 변환하여 함수에서 쓸 변수들을 바로 저장
         gender, education, household, marital, economy, health,\
@@ -229,7 +229,7 @@ def Encoding_for_model(list_request, mode):
         # list로 묶어주기
         ohe_stress = [stress_1, stress_2, stress_3, stress_4]
         
-        # OneHotEncoding으로 묶었던 리스트들을 합치기
+        # OneHotEncoding으로 묶었던 리스트들을 하나의 리스트로 합치기
         ohe_list = ohe_gender + ohe_edu + ohe_house + ohe_mari + ohe_economy + ohe_health\
             + ohe_freq + ohe_amount + ohe_smoking + ohe_stress
         
@@ -267,6 +267,11 @@ def Decoding_for_check(json_dir, dict_request, names_list):
 
 
 # 모델 예측 기능 (tensorflow-lite)
+    # 경량화 없이 1차 개발을 완료했으나, Koyeb free-tier(nano)의 한계로 오류가 자주 발생함
+    # Keras 모델(.h5)로 predict를 실행하는 것이 생각보다 리소스를 많이 잡아먹는 작업임을 깨달음
+    # 따라서 이를 개선하기 위해 Keras모델을 tensorflow-lite를 통해 경량화하여 진행해보았음
+        # 이에 대한 코드는 final-models 폴더에 저장되어 있음
+    # 테스트 결과 압도적인 속도의 개선을 확인했으며, 그동안 발생했었던 오류와 경고들도 더 이상 발생하지 않음을 확인함
 def predict_prob_tflite(data, model_dir):
     '''
     predict_prob_tflite

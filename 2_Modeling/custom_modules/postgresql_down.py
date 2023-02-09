@@ -157,7 +157,7 @@ def load_df_with_columns(mode, target, filepath):
     df = pd.read_csv(filepath, names=col_list)
     
     # 동작여부 테스트용 코드
-    # print(f"{mode} : {df.shape}")
+    print(f"{mode}_{target} : {df.shape}")
     
     # 출력 : DataFrame
     return df
@@ -165,7 +165,7 @@ def load_df_with_columns(mode, target, filepath):
 
 # column 이름을 추가한 DataFrame을 csv로 저장하는 기능
 # mode를 지정하여 목적에 맞게 기능을 수행함(EDA 모드에서는 이진변수를 문자열로 수정)
-def df_to_csv(df, mode, savepath):
+def df_to_csv(df, mode, target, savepath):
     '''
     df_to_csv
         DataFrame을 csv로 저장하는 기능
@@ -195,4 +195,4 @@ def df_to_csv(df, mode, savepath):
     df1.to_csv(savepath, index=False)
     
     # 동작 여부를 확인하기 위한 테스트용 코드
-    # print(f"csv file for {mode} exported Successfully")
+    print(f"csv file for {mode}_{target} exported Successfully")

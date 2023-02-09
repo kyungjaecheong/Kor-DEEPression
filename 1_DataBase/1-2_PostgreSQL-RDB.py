@@ -40,7 +40,9 @@ def main():
     except:
         print('\nconnection error to DB')
         sys.exit()
-
+    '''
+    connection success to DB
+    '''
 
     # 테이블 리스트 정의 (id_year-->targets-->범주형변수들-->features)
     table_list = ['id_year',
@@ -61,12 +63,16 @@ def main():
     # 테이블 초기화 (features-->범주형변수들-->targets-->id_year)
     table_initialization(cursor=cur, table_list=table_list)
     print('\ntable initialization complete')
-    
+    '''
+    table initialization complete
+    '''
     
     # 테이블 생성 (id_year-->targets-->범주형변수들-->features)
     table_creation(cursor=cur, table_list=table_list)
     print('\ntable created complete')
-    
+    '''
+    table created complete
+    '''
     
     # 데이터 삽입 (id_year-->targets-->범주형변수들-->features)
     insertion_csv(cur, table_list[0], path='./1_DataBase/downloads/HN_year.csv')
@@ -74,7 +80,9 @@ def main():
     insertion_json(cur, table_list[2:-1], path='./1_DataBase/json_variable.json')
     insertion_csv(cur, table_list[-1], path='./1_DataBase/downloads/HN_feature.csv')
     print('\ndata insert complete')
-
+    '''
+    data insert complete
+    '''
 
     # 변경사항을 저장(commit)
     conn.commit()
@@ -82,7 +90,9 @@ def main():
     # postgreSQL 연결 종료
     conn.close()    
     print('\nSuccessfully Disconnected to DB\n')
-
+    '''
+    Successfully Disconnected to DB
+    '''
 
 # 파일이 실행되면 자동으로 main 함수를 동작하도록 함  
 if __name__ == '__main__':
