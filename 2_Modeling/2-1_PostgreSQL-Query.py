@@ -39,7 +39,10 @@ def main():
     except:
         print('\nconnection error to DB\n')
         sys.exit()
-
+    '''
+    connection success to DB
+    '''    
+    
     # Query & Get csv(temp) : SQL Qurey문을 통해 csv 데이터를 생성하는 기능
     # EDA모드에서는 범주형 변수의 테이블을 모두 JOIN하여 모두 문자열로 불러옴
     get_csv_file(cur, mode='EDA', target='depression', savepath="./2_Modeling/downloads/temp_data/EDA_depr_temp.csv")
@@ -52,11 +55,19 @@ def main():
     # get_csv_file(cur, mode='error', target='MDD', savepath="./2_Modeling/downloads/error.csv")
     # get_csv_file(cur, mode='EDA', target='error', savepath="./2_Modeling/downloads/error.csv")
     # get_csv_file(cur, mode='Model', target='error', savepath="./2_Modeling/downloads/error.csv")
+    '''
+    EDA_depression_temp.csv file created Successfully
+    EDA_MDD_temp.csv file created Successfully
+    Model_depression_temp.csv file created Successfully
+    Model_MDD_temp.csv file created Successfully
+    '''
     
     # postgreSQL 연결 종료
     conn.close()    
     print('\nSuccessfully Disconnected to DB\n')
-    
+    '''
+    Successfully Disconnected to DB
+    '''
     
     # Data loading : column 이름을 추가하기 위해 저장한 임시 데이터를 다시 불러옴
     df_eda_depr = load_df_with_columns(mode='EDA', target='depression', filepath="./2_Modeling/downloads/temp_data/EDA_depr_temp.csv")
@@ -69,17 +80,31 @@ def main():
     # df_error = load_df_with_columns(mode='EDA', target='error', filepath="./2_Modeling/downloads/temp_data/Model_mdd_temp.csv")
     # df_error = load_df_with_columns(mode='Model', target='error', filepath="./2_Modeling/downloads/temp_data/Model_mdd_temp.csv")
     print('Data loading : Success\n')
+    '''
+    EDA_depression : (16570, 21)
+    EDA_MDD : (3359, 21)
+    Model_depression : (16570, 20)
+    Model_MDD : (3359, 20)
+    Data loading : Success
+    '''
     
     # Data to csv(final) : column 이름을 추가한 최종 데이터들을 Export함
     # EDA 모드에서는 이진변수를 문자열(Yes,No)로 수정
-    df_to_csv(df_eda_depr, mode='EDA', savepath='./2_Modeling/downloads/EDA_depr.csv')
-    df_to_csv(df_eda_mdd, mode='EDA', savepath='./2_Modeling/downloads/EDA_mdd.csv')
+    df_to_csv(df_eda_depr, mode='EDA', target='depression', savepath='./2_Modeling/downloads/EDA_depr.csv')
+    df_to_csv(df_eda_mdd, mode='EDA', target='MDD', savepath='./2_Modeling/downloads/EDA_mdd.csv')
     # Model 모드에서는 'id' column을 제외
-    df_to_csv(df_depr, mode='Model', savepath='./2_Modeling/downloads/Model_depr.csv')
-    df_to_csv(df_mdd, mode='Model', savepath='./2_Modeling/downloads/Model_mdd.csv')
+    df_to_csv(df_depr, mode='Model', target='depression', savepath='./2_Modeling/downloads/Model_depr.csv')
+    df_to_csv(df_mdd, mode='Model', target='MDD', savepath='./2_Modeling/downloads/Model_mdd.csv')
     # #error checking
     # df_to_csv(df_mdd, mode='error', savepath='./2_Modeling/downloads/error.csv')
     print('Data to csv file : Success\n')
+    '''
+    csv file for EDA_depression exported Successfully
+    csv file for EDA_MDD exported Successfully
+    csv file for Model_depression exported Successfully
+    csv file for Model_MDD exported Successfully
+    Data to csv file : Success
+    '''
 
 # 파일이 실행되면 자동으로 main 함수를 동작하도록 함  
 if __name__ == '__main__':

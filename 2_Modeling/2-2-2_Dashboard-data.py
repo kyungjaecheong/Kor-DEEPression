@@ -43,7 +43,12 @@ def main():
     except:
         print('\nconnection error to DB\n')
         sys.exit()
+    
+    '''
+    connection success to DB
+    '''
 
+    
     # SQL Qurey문 정의 (변수는 EDA에서 정한 변수로 추출)
     sql_query = """
     SELECT f.id, y."year", f.age, 
@@ -72,10 +77,18 @@ def main():
     with open(save_path_temp, 'w', encoding='utf-8') as cf:
         cur.copy_expert(sql_csv, cf)
         print("Temp file created Successfully")
-
+    '''
+    Temp file created Successfully
+    '''
+    
+    
     # postgreSQL 연결 종료
     conn.close()    
     print('\nSuccessfully Disconnected to DB\n')
+    '''
+    Successfully Disconnected to DB
+    '''
+    
     
     # Column 이름이 없는 상태로 저장되므로 다시 불러와서 Column 이름을 추가
     column_list = ['id', 'year', 'age', 'sex', '성별', 'household', '세대유형',
@@ -125,9 +138,13 @@ def main():
                    'Depression', 'MDD', 'Depr_MDD', '우울증분류']    
     df_sorted = df_add_target[sort_columns]
     
+    
     # CSV file로 Export
     df_sorted.to_csv(save_path_final, index=False)    
     print("Column Addition & Saving csv : Success\n")
+    '''
+    Column Addition & Saving csv : Success
+    '''
     
 # 파일이 실행되면 자동으로 main 함수를 동작하도록 함  
 if __name__ == '__main__':

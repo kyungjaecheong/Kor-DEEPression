@@ -22,6 +22,7 @@ __all__ = ['data_load',
 # 라이브러리 import 
 import pandas as pd
 
+
 # column 리스트 정의(기본변수, 건강설문, 생활습관, 만성질환, 우울증변수)
 col_demo = ['year', 'age', 'HE_BMI', 'sex', 'edu', 'genertn', 'marri_2', 'EC1_1']
 col_health = ['D_1_1', 'LQ4_00', 'D_2_1', 'BO1_1', 'BO2_1']
@@ -29,6 +30,7 @@ col_life = ['BD1_11', 'BD2_1', 'sm_presnt', 'BP1']
 col_disease = ['HE_HP', 'HE_DM', 'HE_HCHOL', 'HE_HTG']
 col_disease_20 = ['HE_HP', 'HE_DM_HbA1c', 'HE_HCHOL', 'HE_HTG']
 col_dpr = ['DF2_pr', 'mh_PHQ_S']
+
 
 # 데이터 불러오기 기능(2014, 2016, 2018)
 def data_load(filedir):
@@ -50,6 +52,7 @@ def data_load(filedir):
     # column을 추출한 DataFrame 출력
     return df1
 
+
 # 데이터 불러오기 기능(2020)
 def data_load_20(filedir):
     '''
@@ -70,6 +73,7 @@ def data_load_20(filedir):
     # column을 추출한 DataFrame 출력
     return df1
 
+
 # 데이터 병합 기능(concatenate)
 def concat_df(df_list):
     '''
@@ -85,6 +89,7 @@ def concat_df(df_list):
     df = pd.concat(df_list, ignore_index=True)
     # 병합한 DataFrame 출력
     return df
+
 
 # 결측치 제거 기능 : 결측치는 ' '(공백)으로 채워져 있음
 def drop_nan_df(df):
@@ -111,6 +116,7 @@ def drop_nan_df(df):
     # 결측치 제거한 DataFrame 출력
     return df1
 
+
 # 결측치 제거 기능 2 : 설문변수중에서 응답을 거부하거나 모르겠다고 응답한 경우(9 or 99)
 # csv editor를 통해 직접 확인하여 제거를 진행하였으며, 제거는 query함수로 실시함
 def drop_9s_df(df):
@@ -131,6 +137,7 @@ def drop_9s_df(df):
     df2 = df2.reset_index(drop=True)
     # 결측치 제거한 DataFrame 출력
     return df2
+
 
 # Target으로 쓸 Column을 추가하는 기능
 def get_targets(df):
@@ -170,6 +177,7 @@ def get_targets(df):
     df['MDD'] = MDD
     # target column을 추가한 DataFrame 출력
     return df
+
 
 # Feature 1차 가공(재분류)
 def get_features(df):
@@ -307,11 +315,12 @@ def get_features(df):
     # 가공한 Feature column을 추가한 DataFrame 출력
     return df
 
-# 가공한 DataFrame을 RDB형태에 맞도록 분리하는 기능
+
+# 가공한 DataFrame을 RDB형태에 맞도록 재조합하는 기능
 def devide_for_RDB(df):
     '''
     devide_for_RDB
-        가공한 DataFrame을 RDB형태에 맞도록 분리하는 기능
+        가공한 DataFrame을 RDB형태에 맞도록 재조합하는 기능
     ---
     입력 변수 정보
         df : (DataFrame) 분리 할 DataFrame의 List
