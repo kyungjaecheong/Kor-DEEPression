@@ -59,7 +59,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="/prediction">
                                 <img src="../static/icons/favicon-16x16.png" alt="Kor-DEEPression Logo">
                                 Prediction
                                 <span class="visually-hidden">(current)</span>
@@ -124,11 +124,125 @@
                     <p id="formtop"><br>입력된 설문의 개인정보는<br>수집 및 저장되지 않습니다</p>
                 </div>
             </div>
-            <br>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <div class="bs-component">
+                        {% if checklist %}
+                        <div class="d-grid gap-2" id="check-values">
+                            <legend class="mt-4">Final Check. 입력값 확인</legend>
+                                예측에 앞서 아래 표를 통해<br>
+                                입력값들을 확인해 주십시오.<br>
+                                <br>
+                        </div>
+                        <table class="table table-hover" id="check-table">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col" style="text-align: center;">Question</th>
+                                    <th scope="col" style="text-align: left;">Response</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-dark">
+                                    <th scope="row">Gender<br>(성별)</th>
+                                    <td>{{checklist['gender']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Education<br>(최종 학력)</th>
+                                    <td>{{checklist['edu']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Household<br>(세대 유형)</th>
+                                    <td>{{checklist['household']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Marital<br>(혼인 상태)</th>
+                                    <td>{{checklist['marital']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Employ<br>(경제 활동)</th>
+                                    <td>{{checklist['economy']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Healthy<br>(건강 상태)</th>
+                                    <td>{{checklist['health']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Limitation<br>(활동 제한)</th>
+                                    <td>{{checklist['limitation']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Modality<br>(2주간 이환)</th>
+                                    <td>{{checklist['modality']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">W Change<br>(체중 변화)</th>
+                                    <td>{{checklist['w_change']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">W Control<br>(체중 조절)</th>
+                                    <td>{{checklist['w_control']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">High BP<br>(고혈압)</th>
+                                    <td>{{checklist['high_bp']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Diabetes<br>(당뇨병)</th>
+                                    <td>{{checklist['diabetes']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">High lipid<br>(고지혈증)</th>
+                                    <td>{{checklist['high_lipid']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Drink freq<br>(음주 빈도)</th>
+                                    <td>{{checklist['drk_freq']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Drink amt<br>(1회 음주량)</th>
+                                    <td>{{checklist['drk_amount']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Smoking<br>(흡연 여부)</th>
+                                    <td>{{checklist['smoke']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Stress<br>(스트레스)</th>
+                                    <td>{{checklist['stress']}}</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Age<br>(만나이)</th>
+                                    <td>만 {{checklist['age']}} 세</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Height<br>(키)</th>
+                                    <td>{{checklist['height']}} cm</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Weight<br>(체중)</th>
+                                    <td>{{checklist['weight']}} kg</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="text-align: center;">
+                            <br>
+                            입력값의 문제가 없는 경우<br>
+                            아래 버튼 통해 예측을 진행합니다.
+                        </p>
+                        <form action="/result" method="post">
+                            <div class="d-grid gap-2">
+                                <button class="source-button btn btn-primary btn-lg" type="submit" name="predict_type" value="depr">
+                                    <img src="../static/imgs/head-heart-32.png">
+                                    Predict Depression
+                                </button>
+                            </div>
+                        </form>
+                        <br><br>
+                            잘못된 입력값이 있다면<br>
+                            입력을 다시 진행해 주십시오.
+                        {% endif %}
+                        <br><br>
                         <h1>Request Form</h1>
                         <form action="/prediction#check-values" method="post">
                             <fieldset class="form-group">
@@ -729,127 +843,16 @@
                             </div>
                             <br><br>
                         </form>
-                        {% if checklist %}
-                        <div class="d-grid gap-2" id="check-values">
-                            <legend class="mt-4">Final Check. 입력값 확인</legend>
-                                예측에 앞서 아래 표를 통해<br>
-                                입력값들을 확인해 주십시오.<br>
-                                <br>
-                        </div>
-                        <table class="table table-hover" id="check-table">
-                            <thead>
-                                <tr class="table-primary">
-                                    <th scope="col" style="text-align: center;">Question</th>
-                                    <th scope="col" style="text-align: left;">Response</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="table-dark">
-                                    <th scope="row">Gender<br>(성별)</th>
-                                    <td>{{checklist['gender']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Education<br>(최종 학력)</th>
-                                    <td>{{checklist['edu']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Household<br>(세대 유형)</th>
-                                    <td>{{checklist['household']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Marital<br>(혼인 상태)</th>
-                                    <td>{{checklist['marital']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Employ<br>(경제 활동)</th>
-                                    <td>{{checklist['economy']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Healthy<br>(건강 상태)</th>
-                                    <td>{{checklist['health']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Limitation<br>(활동 제한)</th>
-                                    <td>{{checklist['limitation']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Modality<br>(2주간 이환)</th>
-                                    <td>{{checklist['modality']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">W Change<br>(체중 변화)</th>
-                                    <td>{{checklist['w_change']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">W Control<br>(체중 조절)</th>
-                                    <td>{{checklist['w_control']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">High BP<br>(고혈압)</th>
-                                    <td>{{checklist['high_bp']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Diabetes<br>(당뇨병)</th>
-                                    <td>{{checklist['diabetes']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">High lipid<br>(고지혈증)</th>
-                                    <td>{{checklist['high_lipid']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Drink freq<br>(음주 빈도)</th>
-                                    <td>{{checklist['drk_freq']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Drink amt<br>(1회 음주량)</th>
-                                    <td>{{checklist['drk_amount']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Smoking<br>(흡연 여부)</th>
-                                    <td>{{checklist['smoke']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Stress<br>(스트레스)</th>
-                                    <td>{{checklist['stress']}}</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Age<br>(만나이)</th>
-                                    <td>만 {{checklist['age']}} 세</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Height<br>(키)</th>
-                                    <td>{{checklist['height']}} cm</td>
-                                </tr>
-                                <tr class="table-dark">
-                                    <th scope="row">Weight<br>(체중)</th>
-                                    <td>{{checklist['weight']}} kg</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p style="text-align: center;">
-                            <br>
-                            입력값의 문제가 없는 경우<br>
-                            아래 버튼 통해 예측을 진행합니다.
-                        </p>
-                        <form action="/result" method="post">
-                            <div class="d-grid gap-2">
-                                <button class="source-button btn btn-primary btn-lg" type="submit" name="predict_type" value="depr">
-                                    <img src="../static/imgs/head-heart-32.png">
-                                    Predict Depression
-                                </button>
-                            </div>
-                        </form>
-                        <p style="text-align: center;">
-                            <br><br>
-                            입력을 다시 진행하려면<br>
-                            아래 버튼을 클릭하여 주십시오.
-                        </p>
-                        <div class="d-grid gap-2">
-                            <a href="#" class="btn btn-primary btn-lg">
-                                Back to the Top
-                            </a>
-                        </div>
-                        {% endif %}
+                    </div>
+                    <p style="text-align: center;">
+                        <br>
+                        입력을 다시 진행하려면<br>
+                        아래 버튼을 클릭하여 주십시오.
+                    </p>
+                    <div>
+                        <a href="#formtop" class="btn btn-primary btn-lg">
+                            Back to Top of Form
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-2"></div>
