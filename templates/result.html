@@ -222,7 +222,11 @@
                     Major Depressive Disorder
                     <h1 style="background-color: #343a40;">주요우울장애<br>추가예측 결과</h1>
                     <br>
-                    <h2>{{mdd_class}}<br><br></h2>
+                    {% if mdd_class == '경도우울증' %}
+                    <h2>{{mdd_class}}<br>(Minor Depr.)</h2>
+                    {% elif mdd_class == '주요우울장애' %}
+                    <h2>{{mdd_class}}<br>(MDD)</h2>
+                    {% endif %}
                     <br>
                     <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
                     <p style="background-color: #343a40;">

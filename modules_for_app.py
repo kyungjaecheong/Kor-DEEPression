@@ -8,6 +8,20 @@ Project_repo_url : https://github.com/kyungjaecheong/Kor-DEEPression
 Contributor : Kyung Jae, Cheong (정경재)
 '''
 
+# 함수 리스트 및 __all__ 정의(import * 할 때 불러올 함수들을 정의)
+# from custom_modules.postgresql_down import *
+# __all__ = ['Encoding_for_model']
+
+# 라이브러리 import
+import os
+import json
+import numpy as np
+from tensorflow import lite as tflite
+
+# tensorflow-cpu 경고문 출력 없애기
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+
 # Model용 데이터를 얻는 함수(Feature Engineering)
 def Encoding_for_model(list_request, mode):
     '''
@@ -223,126 +237,73 @@ def Encoding_for_model(list_request, mode):
         return ohe_list
 
 
-# --- 모델과 예측기능으로 나누어 진행했었지만, 조건에따라 메모리가 초과되어버리는 문제 발생
-
-# # 모델 불러오기 기능
-# def model_loads(filedir_depr, filedir_mdd):
-#     '''
-#     model_loads
-#         keras 모델 불러오기 기능
-#     ---
-#     입력 변수 정보
-#         filedir : (str)불러올 파일의 디렉토리
-#     ---
-#     출력 : tuple(keras model objects)
-#     '''
-#     # Depression(정상vs우울) h5모델 불러오기
-#     model_depr = load_model(filedir_depr)
-#     # MDD(경도우울vs주요우울) h5모델 불러오기
-#     model_mdd = load_model(filedir_mdd)
+# Check용 데이터를 얻는 함수(from JSON)
+def Decoding_for_check(json_dir, dict_request, names_list):
+    '''
+    Decoding_for_check
+        숫자로 인코딩 값들을 따로 작성한 JSON문서에 기반하여 문자열로 바꾸어주는 기능 
+    ---
+    입력 변수 정보
+        json_dir : (str) JSON 파일의 directory
+        dict_request : (Dict) 변수이름과 값을 담은 딕셔너리
+        names_list : (List) 변수이름들을 순서대로 담은 리스트
+    ---
+    출력 : List
+    '''
+    # JSON 파일 불러오기
+    with open(json_dir, 'r', encoding='utf-8') as jf:
+        json_reader = json.load(jf)
     
-#     # model을 tuple형태로 반환    
-#     return model_depr, model_mdd
-
-
-# # 예측모델 예측실행 기능
-# def pred_prob(model, data):
-#     '''
-#     pred_prob
-#         모델을 통해 예측을 실행하는 함수, probability와 predict class를 반환
-#     ---
-#     입력 변수 정보
-#         model : (Keras Object) keras 모델
-#         data : (List)  
-#     ---
-#     출력 : 
-#         probability : float (0 ~ 1)
-#         predict class : int (0 , 1)
-#     '''
-#     # Data(list)를 array로 변환
-#     array = np.array(data).reshape(1,-1)
+    # Label list를 담을 빈 리스트를 정의
+    labels_list = list()
     
-#     # Predict to Probability (확률값)
-#     predict_prob = model.predict(array, verbose=0)[0][0]
+    # for문으로 names_list 순서대로 레이블값을 append
+    for name in names_list:
+        label = json_reader[name][f"{dict_request[name]}"]
+        labels_list.append(label)
     
-#     # Probability to Predict class (threshold = 0.5)
-#     if predict_prob => 0.5:
-#         pred = 0
-#     elif predict_prob < 0.5:
-#         pred = 1
+    # Label로 Decoding한 리스트를 최종적으로 출력함
+    return labels_list
+
+
+# 모델 예측 기능 (tensorflow-lite)
+def predict_prob_tflite(data, model_dir):
+    '''
+    predict_prob_tflite
+        tensorflow-lite를 이용하여 예측 확률값을 얻는 기능 
+    ---
+    입력 변수 정보
+        data : (list) 예측하고자하는 데이터
+        model_dir : (str) tflite model의 directory
+    ---
+    출력 변수
+        prob : (float) 예측 확률값의 퍼센트값 (소수점 둘째자리)
+        pred : (int) 예측 클래스 (0 or 1)
+    '''
+    # 모델 불러오기
+    interpreter = tflite.Interpreter(model_path=model_dir)
+    # 메모리 할당하기
+    interpreter.allocate_tensors()
+    # input, output 정보담기
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
     
-#     # 확률 값을 웹페이지에서 출력하기 위해 퍼센트값으로 변환
-#     prob = int(round(predict_prob, 2)*100)
+    # data를 input shape에 맞게 변경
+    input_shape = input_details[0]['shape']
+    input_data = np.array(data, dtype=np.float32).reshape(input_shape)
     
-#     # 예측 클래스와 확률값을 반환
-#     return pred, prob
-
-
-# # 조건에 따라 메모리 초과현상이 발견되어 메모리를 적게 쓰는 방법으로 재구성
-#     # with문을 통해 예측 진행 후 CPU 메모리 사용을 종료시키도록 함
-# def model_pred_prob(model_dir, data):
-#     '''
-#     model_pred_prob
-#         모델 불러오기 및 예측기능
-#     ---
-#     입력 변수 정보
-#         model_dir : (str) 불러올 모델의 디렉토리
-#         data : (list) 예측을 위한 데이터 리스트
-#     ---
-#     출력 변수
-#         probability : float (0 ~ 1)
-#         predict class : int (0 , 1)
-#     '''
-#     # Data(list)를 ndarray로 변환하여 입력
-#     array = np.array(data).reshape(1, -1)
+    # tensor에 맞게 세팅 후 invoke실시
+    interpreter.set_tensor(input_details[0]['index'], input_data)
+    interpreter.invoke()
     
-#     # with문으로 예측 이후 동작을 멈추게 해본다
-#     with tf.device("/device:CPU:0"):
-#         # 모델 불러오기
-#         model = load_model(model_dir)
-        
-#         # 예측 --> 확률값을 산출
-#         pred_prob = model.predict(array, batch_size=1, verbose=0, steps=1)
-#         # 확률 값만 뽑아내어 저장
-#         prob = pred_prob[0][0]
-        
-#         # 확률값 --> 예측 클래스를 산출 (Threshold=0.5)
-#         pred_class = np.where(pred_prob<0.5, 0, 1)
-#         # 예측 클래스 값만 뽑아내어 저장
-#         pred = pred_class[0][0]
+    # 예측 실행 (확률값이 출력됨)
+    output_data = interpreter.get_tensor(output_details[0]['index'])
     
-#     # 불필요한 Retracing방지를 위해 필요없는 변수들은 전부 삭제
-#     del array
-#     del model
-#     del pred_prob
-#     del pred_class
+    # 출력변수1) 예측 확률값을 퍼센트로 변환
+    prob = int(round(output_data[0][0], 4)*(10**4))/100
     
-#     # 확률값과 예측클래스를 최종적으로 출력함
-#     return prob, pred
-
-
-# ---테스트용 코드---
-# test_list = [0.5,0.5,1]+[0 for _ in range(44)]
-
-# Data(list)를 ndarray로 변환하여 입력
-    # array = np.array(test_list).reshape(1, -1)
-
-# list를 ndarray가 아닌 tensor형태로 바꾸어 본다
-    # 메모리 초과 발생 ... array로 실행
-# # test_tensor = tf.convert_to_tensor(test_list)
-# # test_tensor_reshape = tf.reshape(test_tensor,shape=[1,47])
-
-# test_dir = './tuning-models/CNN_depr.h5'
-# # with tf.device("/device:CPU:0"):
-# #     model = load_model(test_dir)
-# #     test_prob = model.predict(test_tensor_reshape)
-# # print(test_prob)
-
-# test_prob, test_class = model_pred_prob(test_dir, test_list)
-# print(test_prob, test_class)
-
-# import json
-# with open('./form_labels.json', 'r', encoding='utf-8') as jf:
-#     json_reader = json.load(jf)
-# test_gender = 1
-# print(json_reader["gender"][f"{test_gender}"])
+    # 출력변수2) 확률 값을 통해 예측 클래스를 반환 (기준은 0.5)
+    pred = np.where(output_data<0.5, 0, 1)[0][0]
+    
+    # 출력변수들 최종 반환
+    return prob, pred
