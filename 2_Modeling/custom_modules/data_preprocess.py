@@ -16,7 +16,6 @@ __all__ = ['data_load',
            'one_hot_endcoding',
            'export_to_csv']
 
-
 # 라이브러리 import
 import pandas as pd
 
@@ -42,7 +41,7 @@ def data_load(filedir, target_name):
     df_X = df0[features]
     df_y = df0[target_name]
     
-    # DataFrame들을 Tuple형태로 반환
+    # DataFrame들을 반환
     return df_X, df_y
 
 
@@ -146,6 +145,6 @@ def export_to_csv(X_data, y_data, savepath):
     # csv로 지정한 경로(savepath)에 파일을 생성 혹은 덮어쓰기
     df.to_csv(savepath, index=False)
     
-    # # 테스트용 코드
-    # print(df.shape)
-    # print(df.iloc[:,-1].value_counts(normalize=True))
+    # 테스트용 코드
+    print(df.shape)
+    print(df.iloc[:,-1].value_counts(normalize=True))

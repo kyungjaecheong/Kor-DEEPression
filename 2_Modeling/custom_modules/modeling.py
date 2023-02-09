@@ -10,7 +10,14 @@ Contributor : Kyung Jae, Cheong (정경재)
 
 # 함수 리스트 및 __all__ 정의(import * 할 때 불러올 함수들을 정의)
 # from custom_modules.postgresql_down import *
-# __all__ = []
+__all__ = ['data_load',
+           'data_split',
+           'make_baseline',
+           'Tuning_Logistic',
+           'Tuning_LGBM',
+           'model_builder_mlp',
+           'model_builder_cnn',
+           'callback_sets']
 
 
 # 라이브러리 import
@@ -25,6 +32,7 @@ import keras
 from keras.models import Sequential
 from keras.layers import *
 from keras.callbacks import EarlyStopping, ModelCheckpoint
+
 
 # Data Import 기능 (Feature, Target 분리기능 포함)
 def data_load(filepath, target_name):
@@ -285,10 +293,10 @@ def callback_sets(monitor, mode, patience, savepath):
     ---
     출력 : List
     '''
-    # EarlyStopping
+    # EarlyStopping (patience번 안에 성능이 개선되지 않으면 종료)
     early_stop = EarlyStopping(monitor=monitor, mode=mode, patience=patience,
                                restore_best_weights=True)
-    # ModelCheckpoint
+    # ModelCheckpoint (성능이 가장 좋은 모델을 저장)
     check_point = ModelCheckpoint(filepath=savepath, monitor=monitor, mode=mode,
                                   verbose=0, save_best_only=True)
     # 출력 : list
