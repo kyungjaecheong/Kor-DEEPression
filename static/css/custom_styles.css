@@ -30,15 +30,15 @@ h2 {
     text-align: left;
 }
 
-.navbar-brand {
+.navbar .navbar-brand {
     font-size: 20px;
 }
 
-.nav-item {
+.navbar .nav-item {
     font-size: 20px;
 }
 
-.nav-item .dropdown-menu {
+.navbar .nav-item .dropdown-menu {
     font-size: 16px;
     background-color: #CBBBE8;
 }
