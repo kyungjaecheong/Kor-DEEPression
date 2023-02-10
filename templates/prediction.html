@@ -227,10 +227,26 @@
                         </table>
                         <p style="text-align: center;">
                             <br>
+                            잘못된 입력값이 있다면<br>
+                            뒤로가기 통해 입력 값을 수정해주십시오.
+                            <br><br>
+                            <a href="javascript:window.history.back();">
+                                <button type="button" class="btn btn-outline-primary btn-lg">
+                                    뒤로가기
+                                </button>
+                            </a>
+                        </p>
+                        <p style="text-align: center;">
                             입력값의 문제가 없는 경우<br>
                             아래 버튼 통해 예측을 진행합니다.
                         </p>
                         <form action="/result" method="post">
+                            <input type="hidden" name="depr_percnt" value="{{percnt_depr}}">
+                            <input type="hidden" name="depr_class" value="{{label_depr}}">
+                            {% if percnt_mdd and label_mdd %}
+                            <input type="hidden" name="mdd_percnt" value="{{percnt_mdd}}">
+                            <input type="hidden" name="mdd_class" value="{{label_mdd}}">
+                            {% endif %}
                             <div class="d-grid gap-2">
                                 <button class="source-button btn btn-primary btn-lg" type="submit" name="predict_type" value="depr">
                                     <img src="../static/imgs/head-heart-32.png">
@@ -239,8 +255,6 @@
                             </div>
                         </form>
                         <br><br>
-                            잘못된 입력값이 있다면<br>
-                            입력을 다시 진행해 주십시오.
                         {% endif %}
                         <br><br>
                         <h1>Request Form</h1>

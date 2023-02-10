@@ -115,7 +115,7 @@
                     <p class="lead">한국형 우울증<br>진단/예측 프로그램</p>
                 </div>
             </div>
-            {% if pred_depr == 0 %}
+            {% if percnt_depr %}
             <div class="row">
                 <div class="col-md-3 col-lg-4"></div>
                 <div class="col-md-6 col-lg-4">
@@ -123,86 +123,77 @@
                     Depression
                     <h1 style="background-color: #343a40;">우울증<br>예측 결과</h1>
                     <br>
-                    <h2>정상<br>(Normal)</h2>
-                    <br>
-                    <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
-                    <p style="background-color: #343a40;">
-                        우울증 진단 확률 값은<br>{{prob_depr}} %로,
-                        <br>
-                        이는 "정상" 군에<br>해당하는 수치입니다.
-                        <br>
-                        <small class="text-muted">
-                            확률값이 50% 이상일때 우울증으로 분류
-                        </small>
-                    </p>
-                    <br><br>
-                    <h3>
-                        <img src="../static/imgs/head-heart-32.png">
-                        예측 모델 정보
-                    </h3>
-                    <p>
-                        Deep-Learning 1D-CNN<br>
-                        <small class="text-muted">
-                            (Convolutional Neural Networks)
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="pill" href="#result-depr" aria-selected="true">
+                                결과 (Result)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" data-bs-toggle="pill" href="#" aria-selected="false">/</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="pill" href="#model-depr" aria-selected="false">
+                                모델정보
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="result-depr" class="tab-pane fade active show">
                             <br>
-                            Modeling by Tensorflow(Keras)
-                        </small>
-                    </p>
-                    <h5>검증 정확도(Accuracy)</h5>
-                    <p>84 % (0.8366)</p>
-                    <h5>검증 ROC_AUC score</h5>
-                    <p>83 % (0.8291)</p>
+                            {% if label_depr=="정상" %}
+                            <h2>{{label_depr}}<br>(Normal)</h2>
+                            {% elif label_depr=="우울증" %}
+                            <h2>{{label_depr}}<br>(Depression)</h2>
+                            {% endif %}
+                            <br>
+                            <p>우울증 진단 확률 값<br>{{percnt_depr}} %</p>
+                            <p style="background-color: #343a40;">
+                                우울증 예측을 실시한 결과,<br>진단 확률 값은 {{percnt_depr}} % 이며,
+                                <br>
+                                이는 "{{label_depr}}" 군에<br>해당하는 수치입니다.
+                                <br>
+                                <small class="text-muted">
+                                    확률 값 50% 이상 : 우울증으로 분류
+                                </small>
+                            </p>
+                        </div>
+                        <div id="model-depr" class="tab-pane fade">
+                            <br>
+                            <h3>
+                                <img src="../static/imgs/head-heart-32.png">
+                                우울증(Depression)<br>예측 모델
+                            </h3>
+                            <p>
+                                Deep-Learning 1D-CNN<br>
+                                <small class="text-muted">
+                                    (Convolutional Neural Networks)
+                                    <br>
+                                    Modeling by Tensorflow(Keras)
+                                </small>
+                            </p>
+                            <h5>검증 정확도(Accuracy)</h5>
+                            <p>84 % (0.8366)</p>
+                            <h5>검증 ROC_AUC score</h5>
+                            <p>83 % (0.8291)</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3 col-lg-4"></div>
             </div>
-            {% elif pred_depr == 1 %}
-            <div class="row">
-                <div class="col-md-3 col-lg-4"></div>
-                <div class="col-md-6 col-lg-4">
-                    <br><br>
-                    Depression
-                    <h1 style="background-color: #343a40;">우울증<br>예측 결과</h1>
-                    <br>
-                    <h2>우울증<br>(Depression)</h2>
-                    <br>
-                    <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
-                    <p style="background-color: #343a40;">
-                        우울증 진단 확률 값은<br>{{prob_depr}} %로,
-                        <br>
-                        이는 "우울증" 군에<br>해당하는 수치입니다.
-                        <br>
-                        <small class="text-muted">
-                            확률값이 50% 이상일때 우울증으로 분류
-                        </small>
-                    </p>
-                    <br><br>
-                    <h3>
-                        <img src="../static/imgs/head-heart-32.png">
-                        예측 모델 정보
-                    </h3>
-                    <p>
-                        Deep-Learning 1D-CNN<br>
-                        <small class="text-muted">
-                            (Convolutional Neural Networks)
-                            <br>
-                            Modeling by Tensorflow(Keras)
-                        </small>
-                    </p>
-                    <h5>검증 정확도(Accuracy)</h5>
-                    <p>84 % (0.8366)</p>
-                    <h5>검증 ROC_AUC score</h5>
-                    <p>83 % (0.8291)</p>
-                </div>
-                <div class="col-md-3 col-lg-4"></div>
-            </div>
+            {% if label_depr=="우울증" %}
             <div class="row">
                 <div class="col-md-3 col-lg-4"></div>
                 <div class="col-md-6 col-lg-4">
                     <br><br>
                     Major Depressive Disorder
-                    <h1 style="background-color: #343a40;">주요우울장애<br>추가 예측 기능</h1>
-                    추가 예측을 원하신다면<br>아래 버튼을 클릭해주십시오<br>
+                    <h1 style="background-color: #343a40;">주요우울장애<br>추가 예측</h1>
+                    추가 예측을 원하시는 경우<br>아래 버튼을 클릭해주십시오<br><br>
                     <form action="/result" method="post">
+                        <input type="hidden" name="add_depr_percnt" value="{{percnt_depr}}">
+                        <input type="hidden" name="add_depr_class" value="{{label_depr}}">
+                        <input type="hidden" name="add_mdd_percnt" value="{{percnt_mdd}}">
+                        <input type="hidden" name="add_mdd_class" value="{{label_mdd}}">
                         <div class="d-grid gap-2">
                             <button class="source-button btn btn-primary btn-lg" type="submit" name="predict_type" value="mdd">
                                 <img src="../static/imgs/head-heart-32.png">
@@ -214,7 +205,8 @@
                 <div class="col-md-3 col-lg-4"></div>
             </div>
             {% endif %}
-            {% if mdd_class and prob_mdd %}
+            {% endif %}
+            {% if add_percnt_depr %}
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
@@ -222,74 +214,118 @@
                     Major Depressive Disorder
                     <h1 style="background-color: #343a40;">주요우울장애<br>추가예측 결과</h1>
                     <br>
-                    {% if mdd_class == '경도우울증' %}
-                    <h2>{{mdd_class}}<br>(Minor Depr.)</h2>
-                    {% elif mdd_class == '주요우울장애' %}
-                    <h2>{{mdd_class}}<br>(MDD)</h2>
-                    {% endif %}
-                    <br>
-                    <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
-                    <p style="background-color: #343a40;">
-                        주요우울장애 확률 값은<br>{{prob_mdd}} %로,
-                        <br>
-                        이는 "{{mdd_class}}" 군에<br>해당하는 수치입니다.
-                        <br>
-                        <small class="text-muted">
-                            확률값이 50% 이상일때 MDD로 분류
-                        </small>
-                    </p>
-                    <br><br>
-                    <h3>
-                        <img src="../static/imgs/head-heart-32.png">
-                        주요우울장애(MDD)<br>예측 모델
-                    </h3>
-                    <p>
-                        Deep-Learning MLP<br>
-                        <small class="text-muted">
-                            (Multi-Layer Perceptron)
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="pill" href="#add-result-mdd" aria-selected="true">
+                                결과 (Result)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" data-bs-toggle="pill" href="#" aria-selected="false">/</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="pill" href="#add-model-mdd" aria-selected="false">
+                                모델정보
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="add-result-mdd" class="tab-pane fade active show">
                             <br>
-                            Modeling by Tensorflow(Keras)
-                        </small>
-                    </p>
-                    <h5>검증 정확도(Accuracy)</h5>
-                    <p>77 % (0.7722)</p>
-                    <h5>검증 ROC_AUC score</h5>
-                    <p>78 % (0.7838)</p>
+                            {% if add_label_mdd == '경도우울증' %}
+                            <h2>{{add_label_mdd}}<br>(Minor Depr.)</h2>
+                            {% elif add_label_mdd == '주요우울장애' %}
+                            <h2>{{add_label_mdd}}<br>(MDD)</h2>
+                            {% endif %}
+                            <br>
+                            <p>주요우울장애 진단 확률 값<br>{{add_percnt_mdd}} %</p>
+                            <p style="background-color: #343a40;">
+                                MDD 예측을 실시한 결과,<br>진단 확률 값은 {{add_percnt_mdd}} % 이며,
+                                <br>
+                                이는 "{{add_label_mdd}}" 군에<br>해당하는 수치입니다.
+                                <br>
+                                <small class="text-muted">
+                                    확률 값 50% 이상 : MDD로 분류
+                                </small>
+                            </p>
+                        </div>
+                        <div id="add-model-mdd" class="tab-pane fade">
+                            <br>
+                            <h3>
+                                <img src="../static/imgs/head-heart-32.png">
+                                주요우울장애(MDD)<br>예측 모델
+                            </h3>
+                            <p>
+                                Deep-Learning MLP<br>
+                                <small class="text-muted">
+                                    (Multi-Layer Perceptron)
+                                    <br>
+                                    Modeling by Tensorflow(Keras)
+                                </small>
+                            </p>
+                            <h5>검증 정확도(Accuracy)</h5>
+                            <p>77 % (0.7722)</p>
+                            <h5>검증 ROC_AUC score</h5>
+                            <p>78 % (0.7838)</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <br><br>
                     Depression
                     <h1 style="background-color: #343a40;">우울증<br>예측 결과</h1>
                     <br>
-                    <h2>우울증<br>(Depression)</h2>
-                    <br>
-                    <p style="background-color: #343a40;">입력해주신 정보로<br>예측을 실시한 결과,</p>
-                    <p style="background-color: #343a40;">
-                        우울증 진단 확률 값은<br>{{prob_depr}} %로,
-                        <br>
-                        이는 "우울증" 군에<br>해당하는 수치입니다.
-                        <br>
-                        <small class="text-muted">
-                            확률값이 50% 이상일때 우울증으로 분류
-                        </small>
-                    </p>
-                    <br><br>
-                    <h3>
-                        <img src="../static/imgs/head-heart-32.png">
-                        우울증(Depression)<br>예측 모델
-                    </h3>
-                    <p>
-                        Deep-Learning 1D-CNN<br>
-                        <small class="text-muted">
-                            (Convolutional Neural Networks)
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="pill" href="#add-result-depr" aria-selected="true">
+                                결과 (Result)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" data-bs-toggle="pill" href="#" aria-selected="false">/</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="pill" href="#add-model-depr" aria-selected="false">
+                                모델정보
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="add-result-depr" class="tab-pane fade active show">
                             <br>
-                            Modeling by Tensorflow(Keras)
-                        </small>
-                    </p>
-                    <h5>검증 정확도(Accuracy)</h5>
-                    <p>84 % (0.8366)</p>
-                    <h5>검증 ROC_AUC score</h5>
-                    <p>83 % (0.8291)</p>
+                            <h2>{{add_label_depr}}<br>(Depression)</h2>
+                            <br>
+                            <p>우울증 진단 확률 값<br>{{add_percnt_depr}} %</p>
+                            <p style="background-color: #343a40;">
+                                우울증 예측을 실시한 결과,<br>진단 확률 값은 {{add_percnt_depr}} % 이며,
+                                <br>
+                                이는 "{{add_label_depr}}" 군에<br>해당하는 수치입니다.
+                                <br>
+                                <small class="text-muted">
+                                    확률 값 50% 이상 : 우울증으로 분류
+                                </small>
+                            </p>
+                        </div>
+                        <div id="add-model-depr" class="tab-pane fade">
+                            <br>
+                            <h3>
+                                <img src="../static/imgs/head-heart-32.png">
+                                우울증(Depression)<br>예측 모델
+                            </h3>
+                            <p>
+                                Deep-Learning 1D-CNN<br>
+                                <small class="text-muted">
+                                    (Convolutional Neural Networks)
+                                    <br>
+                                    Modeling by Tensorflow(Keras)
+                                </small>
+                            </p>
+                            <h5>검증 정확도(Accuracy)</h5>
+                            <p>84 % (0.8366)</p>
+                            <h5>검증 ROC_AUC score</h5>
+                            <p>83 % (0.8291)</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2"></div>
             </div>
