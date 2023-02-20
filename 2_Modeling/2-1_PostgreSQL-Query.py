@@ -43,7 +43,7 @@ def main():
     connection success to DB
     '''    
     
-    # Query & Get csv(temp) : SQL Qurey문을 통해 csv 데이터를 생성하는 기능
+    # Query & Get csv(temp) : SQL Query문을 통해 csv 데이터를 생성하는 기능
     # EDA모드에서는 범주형 변수의 테이블을 모두 JOIN하여 모두 문자열로 불러옴
     get_csv_file(cur, mode='EDA', target='depression', savepath="./2_Modeling/downloads/temp_data/EDA_depr_temp.csv")
     get_csv_file(cur, mode='EDA', target='MDD', savepath="./2_Modeling/downloads/temp_data/EDA_mdd_temp.csv")

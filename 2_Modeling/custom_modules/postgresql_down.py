@@ -18,12 +18,12 @@ __all__ = ['get_csv_file',
 import pandas as pd
 
 
-# SQL Qurey문을 통해 csv 데이터를 생성하는 기능
+# SQL Query문을 통해 csv 데이터를 생성하는 기능
 # mode를 지정하여 목적에 맞게 쿼리를 실시함
 def get_csv_file(cursor, mode, target, savepath):
     '''
     get_csv_file
-        SQL Qurey문을 통해 csv 데이터를 생성하는 기능
+        SQL Query문을 통해 csv 데이터를 생성하는 기능
     ---
     입력 변수 정보
         cursor : (object) psycopg2.connect.cursor()
