@@ -16,7 +16,7 @@ def page_not_found(error):
     # templates/404.html 실행(404)
     return render_template('404.html'), 404
 
-# 404 error handling (GET/POST 에러가 발생한 경우)
+# 405 error handling (GET/POST 에러가 발생한 경우)
 @app.errorhandler(405)
 def method_not_allowed(error):
     # templates/405.html 실행(405)

@@ -49,7 +49,7 @@ def main():
     '''
 
     
-    # SQL Qurey문 정의 (변수는 EDA에서 정한 변수로 추출)
+    # SQL Query문 정의 (변수는 EDA에서 정한 변수로 추출)
     sql_query = """
     SELECT f.id, y."year", f.age, 
         f.sex, f1.sex,

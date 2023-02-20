@@ -7,7 +7,14 @@
 - Dashboard link = [Kor-DEEPression Trend Dashboard (click)](https://lookerstudio.google.com/reporting/a44f286d-d07a-41e5-bdea-a357f733b4ca)
 <br>
 
-- 블로그 포스팅 (Tech-blog) [ 작성중 ]
+- 블로그 포스팅 (Tech-blog) [ 작성완료 ]
+  - [(1) Outline & Introduction (개요 & 서론)](https://velog.io/@dankj1991/Project-Kor-DEEPression)
+  - [(2) Preprocess & Database (전처리 & 데이터베이스 구축)](https://velog.io/@dankj1991/Project-Kor-DEEPression-Database)
+  - [(3) EDA & Dashboard (시각화 분석 & 대시보드)](https://velog.io/@dankj1991/Project-Kor-DEEPression-EDA)
+  - [(4-1) ML / DL Modeling (모델링)](https://velog.io/@dankj1991/Project-Kor-DEEPression-Modeling)
+  - [(4-2) Final Model & Compression (최종모델 및 모델경량화)](https://velog.io/@dankj1991/Project-Kor-DEEPression-Final-Model)
+  - [(5) Deployment & Conclusion (프로그램 배포 및 결론)](https://velog.io/@dankj1991/Project-Kor-DEEPression-Deployment)
+
 <br>
 
 <div align=center>
