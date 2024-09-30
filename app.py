@@ -4,8 +4,10 @@ $ python app.py
 '''
 
 # 라이브러리 및 모듈함수 불러오기
+import os
 from flask import Flask, render_template, request
 from modules_for_app import *
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 # Flask app 지정
 app = Flask(__name__)
